@@ -3,15 +3,71 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="./views/functions.js"></script>
 
-<h2>Samochody</h2>
+<h2 class='form-outline mx-5 my-2'>Samochody</h2>
 
-<div class='form-outline mt-3 mx-2'>
+<div class='form-outline mx-5 my-3'>
     <?php
     if ($_SESSION['perm'] == "admin") {
         echo "<a href='index.php?action=addEquip'' class='btn btn-info' name='addEquip'>Dodaj samochód</a>";
     }
     ?>
 </div>
+
+<!-- Wyswietlenie samochodów -->
+<?php foreach ($stmt as $row) { ?>
+    <div class="card mb-3 mx-5">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <?php 
+                if($row['zdjecie'] != null)
+                    echo "<img src='{$row['zdjecie']}' class='h-100 card-img' alt='{$row['tytul']}'>";
+                else
+                    echo "<img src='images/sedan-car-front.png' class='h-100 card-img mx-1' alt='default_car'>";
+                ?>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo "{$row['marka']} {$row['model']} ({$row['rejestracja']})" ?></h5>
+                    </div>
+                    <div class="col-md-6">
+                        <?php
+                        echo "<ul class='list-group list-group-flush'>
+                        <li class='mb-1'>{$row['segment']} ({$row['rok']})</li>
+                        <li class='mb-1'>Skrzynia {$row['skrzynia']}</li>
+                        <li class='mb-1'>Liczba miejsc: {$row['liczbamiejsc']}</li>
+                        <li class='mb-1'>Moc: {$row['mockw']} kW / "; echo(round($row['mockw'] * 1.36));
+                        echo " KM</li>
+                        </ul>";
+
+                        ?>
+                    </div>
+
+                    <div class="col-md-6">
+                        <?php
+                        echo "<ul class='list-group list-group-flush'> 
+                            <li class='mb-1'>{$row['paliwo']}</li>
+                            <li class='mb-1'> </li>
+                            <li class='mb-1' style='background-color: crimson;'> Cena 24h: {$row['cenadoba']}</li>
+                            <li class='mb-1' style='background-color: crimson;'> Cena KM:  {$row['cenakm']}</li>
+                            </ul>";
+
+                        if ($row['dostepny'] == true)
+                            echo "<p class='card-text mt-1'><small class='ok'>Dostępny</small></p>";
+                        else
+                            echo "<p class='card-text mt-1'><small style='color: red;'>Nie dostępny</small></p>";
+                        ?>
+                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php
+}
+?>
+
 <!--
 <p></p>
 

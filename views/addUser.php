@@ -36,8 +36,7 @@ if($_SESSION['perm']=='admin' || $_SESSION['perm']=='kierownik')
             <select name="stanowisko">
                 <option>admin</option>
 				<option>kierownik</option>
-				<option>pracownik</option>
-                <option selected>sprzedawca</option>
+				<option selected>pracownik</option>
             </select>
 			<?php if (array_key_exists('stanowisko', $errors)): ?><span><?php echo $errors['stanowisko'] ?></span><?php endif; ?>
 		</li>
