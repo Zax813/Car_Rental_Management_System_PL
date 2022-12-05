@@ -3,7 +3,7 @@ $fields['imie'] = array_key_exists('imie', $_POST) ? $_POST['imie'] : '';
 $fields['nazwisko'] = array_key_exists('nazwisko', $_POST) ? $_POST['nazwisko'] : '';
 $fields['login'] = array_key_exists('login', $_POST) ? $_POST['login'] : '';
 $fields['haslo'] = array_key_exists('haslo', $_POST) ? $_POST['haslo'] : '';
-$fields['stanowisko'] = array_key_exists('stanowisko', $_POST) ? $_POST['stanowisko'] : '';
+$fields['uprawnienia'] = array_key_exists('uprawnienia', $_POST) ? $_POST['uprawnienia'] : '';
 $fields['telefon'] = array_key_exists('telefon', $_POST) ? $_POST['telefon'] : '';
 $fields['email'] = array_key_exists('email', $_POST) ? $_POST['email'] : '';
 $errors = array();
@@ -55,14 +55,14 @@ $info="";
         {
             try
             {
-                $ustmt = $db->prepare("INSERT INTO pracownicy (imie, nazwisko, login, haslo, stanowisko, email, telefon) 
-                                    VALUES (:imie, :nazwisko, :login, :haslo, :stanowisko, :email, :telefon)");
+                $ustmt = $db->prepare("INSERT INTO pracownicy (imie, nazwisko, login, haslo, uprawnienia, email, telefon) 
+                                    VALUES (:imie, :nazwisko, :login, :haslo, :uprawnienia, :email, :telefon)");
 
                 $ustmt->bindValue(':imie', $_POST['imie']);
                 $ustmt->bindValue(':nazwisko', $_POST['nazwisko']);
                 $ustmt->bindValue(':login', $_POST['login']);
                 $ustmt->bindValue(':haslo', hash('sha256',$_POST['haslo']));
-                $ustmt->bindValue(':stanowisko', $_POST['stanowisko']);
+                $ustmt->bindValue(':uprawnienia', $_POST['uprawnienia']);
                 $ustmt->bindValue(':telefon', $_POST['telefon']);
                 $ustmt->bindValue(':email', $_POST['email']);
                 $ustmt->execute();

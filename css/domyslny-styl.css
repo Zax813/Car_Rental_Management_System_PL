@@ -130,7 +130,7 @@ figcaption
     left: 125px;
     font-size: 20;
 }
-
+/*
 table
 {
     position: relative;
@@ -156,7 +156,7 @@ td
     padding-right: 6px;
     max-width: 300px;
 }
-
+*/
 .ok
 {
     color:green;

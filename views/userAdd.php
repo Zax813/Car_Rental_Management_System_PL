@@ -7,7 +7,7 @@ if($_SESSION['perm']=='admin' || $_SESSION['perm']=='kierownik')
 ?>
 <h2>Dodaj pracownika</h2>
 
-<form method="post" action="index.php?action=addUser">
+<form method="post" action="index.php?action=userAdd">
 
 	<fieldset>
 		<ul>
@@ -32,13 +32,13 @@ if($_SESSION['perm']=='admin' || $_SESSION['perm']=='kierownik')
             <?php if (array_key_exists('haslo', $errors)): ?><span><?php echo $errors['haslo'] ?></span><?php endif; ?>
 		</li>
         <li>
-			<label>Stanowisko</label>
-            <select name="stanowisko">
+			<label>Uprawnienia</label>
+            <select name="uprawnienia">
                 <option>admin</option>
 				<option>kierownik</option>
 				<option selected>pracownik</option>
             </select>
-			<?php if (array_key_exists('stanowisko', $errors)): ?><span><?php echo $errors['stanowisko'] ?></span><?php endif; ?>
+			<?php if (array_key_exists('uprawnienia', $errors)): ?><span><?php echo $errors['uprawnienia'] ?></span><?php endif; ?>
 		</li>
 		<li>
 			<label>Telefon</label>

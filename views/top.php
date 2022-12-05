@@ -3,6 +3,7 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/domyslny-styl.css">
+<script src="./views/functions.js"></script>
 
 </head>
 <header>

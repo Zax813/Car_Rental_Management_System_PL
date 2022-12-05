@@ -1,5 +1,6 @@
 <?php
 
+
 //Funkcja sprawdzająca czy numer telefonu zawiera tylko cyfry i znak '+'
 function validtel($tel) 
 {
@@ -38,7 +39,7 @@ function m_array_str($array, $col)
 //Funkcja sprawdzająca czy w tabeli znajduje się przynajmniej jeden pracownik z uprawnieniami administratora
 function is_admins($db)
 {
-    $stmt = $db->query("SELECT idpracownika FROM pracownicy WHERE stanowisko='admin'");
+    $stmt = $db->query("SELECT idpracownika FROM pracownicy WHERE uprawnienia='admin'");
     $data = $stmt->fetchAll();
 
     $count = 0;
