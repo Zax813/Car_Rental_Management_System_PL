@@ -16,9 +16,9 @@
 				//Linki panelu bocznego dla uprawnień admina i kierownika
 				echo "<div id='mySidepanel' class='sidepanel'>";
 					echo "<a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>&times;</a>";
+					echo "<a href='index.php?action=home' name='equipList'>Samochody</a>";
 					echo "<a href='index.php?action=userList' name='userList'>Pracownicy</a>";
 					echo "<a href='index.php?action=clientList' name='clientList'>Klienci</a>";
-					echo "<a href='index.php?action=home' name='equipList'>Sprzęt</a>";
 					echo "<a href='index.php?action=equipDelivery' name='equipDelivery'>Dostawy</a>";
 					echo "<a href='index.php?action=showCart' name='showCart'>Koszyk"; if(isset($_SESSION['cart'])){ echo "(".count($_SESSION["cart"]).")"; } echo "</a>";
 					echo "<a href='index.php?action=showOrders' name='showOrders'>Zamówienia</a>";
@@ -32,8 +32,8 @@
 				//Linki panelu bocznego dla uprawnień pracownika
 				echo "<div id='mySidepanel' class='sidepanel'>";
 					echo "<a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>&times;</a>";
+					echo "<a href='index.php?action=home' name='equipList'>Samochody</a>";
 					echo "<a href='index.php?action=clientList' name='clientList'>Klienci</a>";
-					echo "<a href='index.php?action=home' name='equipList'>Sprzęt</a>";
 					echo "<a href='index.php?action=equipDelivery' name='equipDelivery'>Dostawy</a>";
 					echo "<a href='index.php?action=showCart' name='showCart'>Koszyk"; if(isset($_SESSION['cart'])){ echo "(".count($_SESSION["cart"]).")"; } echo "</a>";
 					echo "<a href='index.php?action=showOrders' name='showOrders'>Zamówienia</a>";
