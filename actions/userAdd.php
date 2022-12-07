@@ -1,14 +1,26 @@
 <?php
-$fields['imie'] = array_key_exists('imie', $_POST) ? $_POST['imie'] : '';
-$fields['nazwisko'] = array_key_exists('nazwisko', $_POST) ? $_POST['nazwisko'] : '';
-$fields['login'] = array_key_exists('login', $_POST) ? $_POST['login'] : '';
-$fields['haslo'] = array_key_exists('haslo', $_POST) ? $_POST['haslo'] : '';
-$fields['powtorzhaslo'] = array_key_exists('powtorzhaslo', $_POST) ? $_POST['powtorzhaslo'] : '';
-$fields['uprawnienia'] = array_key_exists('uprawnienia', $_POST) ? $_POST['uprawnienia'] : '';
-$fields['telefon'] = array_key_exists('telefon', $_POST) ? $_POST['telefon'] : '';
-$fields['email'] = array_key_exists('email', $_POST) ? $_POST['email'] : '';
-$errors = array();
-$info="";
+
+if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") 
+{
+    if((array_key_exists('event', $_GET)))
+    {
+        if($_GET['event']=='list')
+        {
+            redirect(url('userList'));
+        }
+    }
+
+
+    $fields['imie'] = array_key_exists('imie', $_POST) ? $_POST['imie'] : '';
+    $fields['nazwisko'] = array_key_exists('nazwisko', $_POST) ? $_POST['nazwisko'] : '';
+    $fields['login'] = array_key_exists('login', $_POST) ? $_POST['login'] : '';
+    $fields['haslo'] = array_key_exists('haslo', $_POST) ? $_POST['haslo'] : '';
+    $fields['powtorzhaslo'] = array_key_exists('powtorzhaslo', $_POST) ? $_POST['powtorzhaslo'] : '';
+    $fields['uprawnienia'] = array_key_exists('uprawnienia', $_POST) ? $_POST['uprawnienia'] : '';
+    $fields['telefon'] = array_key_exists('telefon', $_POST) ? $_POST['telefon'] : '';
+    $fields['email'] = array_key_exists('email', $_POST) ? $_POST['email'] : '';
+    $errors = array();
+    $info = "";
 
     if(isset($_POST["acceptAdd"])) 
     {
@@ -97,5 +109,6 @@ $info="";
             }
         }
     }
+}
 
 ?>

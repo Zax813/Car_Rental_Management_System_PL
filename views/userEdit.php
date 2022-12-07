@@ -6,7 +6,7 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 	<h2 class='form-outline mx-5 my-2'>Edytuj pracownika</h2>
 
 	<div class='form-outline mx-5 my-2'>
-		<a class='btn btn-info btn-sm' href='index.php?action=userEdit&event=back' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
+		<a class='btn btn-info btn-sm' href='index.php?action=userEdit&event=list' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
 	</div>
 
 	<div class='form-outline mx-5 d-flex justify-content-center'>

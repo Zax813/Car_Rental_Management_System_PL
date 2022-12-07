@@ -7,6 +7,10 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
 {
     echo "<a href='index.php?action=userAdd' class='btn btn-info' name='userAdd'>Dodaj Pracownika</a>";
 ?>
+<form class="horizontal d-flex justify-content-end" action="index.php?action=userList" method="POST">
+    <input type="search" name="search" value="<?php echo $fields['search'] ?>" maxlength="25">
+    <button type="submit" class="btn btn-warning"  name="find" id="find"><i class="bi bi-search"></i></button>
+</form>
 </div>
 <div class='form-outline mx-5 my-2'>
     <table class="table table-dark table-striped">

@@ -1,16 +1,16 @@
 <?php
 
-if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") {
-    
+if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") 
+{
     if((array_key_exists('event', $_GET)))
     {
-        if($_GET['event']=="back")
+        if($_GET['event']=='list')
         {
             unset($_SESSION['edit']);
             redirect(url('userList'));
         }
     }
-
+    
     if (isset($_SESSION['edit'])) {
         $stmt = $db->query("SELECT * FROM pracownicy WHERE idpracownika = {$_SESSION['edit']}");
 
@@ -96,7 +96,5 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") {
                 }
             }
         }
-    } else {
-        redirect(url('pageNotFound'));
-    }
+    } 
 }
