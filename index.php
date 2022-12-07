@@ -31,6 +31,8 @@ $actions = array('home',
                 'logout',
                 'pageNotFound',
                 'userAdd',
+                'userDetails',
+                'userEdit',
                 'userList'
                 );
 

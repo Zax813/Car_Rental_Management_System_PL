@@ -2,6 +2,7 @@
 <meta charset="utf-8" />
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
+<link  rel="stylesheet" href="css/bootstrap-icons.css">
 <link rel="stylesheet" href="css/domyslny-styl.css">
 <script src="./views/functions.js"></script>
 

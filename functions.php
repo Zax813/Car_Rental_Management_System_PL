@@ -8,6 +8,7 @@ function validtel($tel)
     return preg_match($reg, $tel);
 }
 
+
 function in_array_r($needle, $stack, $strict = false)
 {
     foreach ($stack as $item) {
@@ -17,6 +18,7 @@ function in_array_r($needle, $stack, $strict = false)
     }
     return false;
 }
+
 
 function m_array_str($array, $col)
 {

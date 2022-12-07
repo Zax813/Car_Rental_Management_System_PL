@@ -62,17 +62,17 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 			</div>
 
 			<div class='form-group mb-2'>
-				<label class='control-label'>Telefon</label>
+				<label class='control-label' for='telefon'>Telefon</label>
 				<div class='controls'>
-				<input type='number' name='telefon' value='<?php echo $fields['telefon'] ?>' />
+				<input id='telefon' type='number' name='telefon' value='<?php echo $fields['telefon'] ?>' />
 				<?php if (array_key_exists('telefon', $errors)) : ?><span><?php echo $errors['telefon'] ?></span><?php endif; ?>
 				</div>
 			</div>
 
 			<div class='form-group mb-2'>
-				<label class='control-label'>E-mail</label>
+				<label class='control-label' for='email'>E-mail</label>
 				<div class='controls'>
-				<input type='email' name='email' value='<?php echo $fields['email'] ?>' />
+				<input id='email' type='email' name='email' value='<?php echo $fields['email'] ?>' />
 				<?php if (array_key_exists('email', $errors)) : ?><span><?php echo $errors['email'] ?></span><?php endif; ?>
 			</div>
 			</div>
