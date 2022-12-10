@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link  rel="stylesheet" href="css/bootstrap-icons.css">
 <link rel="stylesheet" href="css/domyslny-styl.css">
-<script src="./views/functions.js"></script>
+<script src="./js/default-functions.js"></script>
+<script src="./js/jquery-3.6.1.min.js"></script>
 
 </head>
 <header>

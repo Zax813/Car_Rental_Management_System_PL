@@ -1,6 +1,7 @@
 <?php
 $fields['search'] = array_key_exists('search', $_POST) ? $_POST['search'] : '';
 
+/*
     if(!empty($_POST['search'])) {
         $search = $_POST['search'];
 
@@ -10,10 +11,15 @@ $fields['search'] = array_key_exists('search', $_POST) ? $_POST['search'] : '';
     
         $stmt->bindValue(':keysearch', '%' . $search . '%', PDO::PARAM_STR);
         $stmt->execute();
+        $result = $stmt -> fetchAll();
     }
     else{
+    */
         $stmt = $db->query('SELECT idpracownika,login,imie,nazwisko,uprawnienia,zatrudniony FROM pracownicy ORDER BY zatrudniony DESC, idpracownika;');
+        $result = $stmt -> fetchAll();
+    /*
     }
+*/
 
 
     if((array_key_exists('event', $_GET)))
