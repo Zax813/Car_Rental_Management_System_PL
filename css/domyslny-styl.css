@@ -1,19 +1,21 @@
 html
 {
-    background-color: black;
+    /*
+    background-color: #181a1b;
     color: white;
+    */
     font-size: 18px;
 }
-
+/*
 body
 {
-    background-color: black;
+    background-color: #181a1b;
     color: white;
 }
-
+*/
 header
 {
-    color: white;
+    
 	background-color:#003366;
 	text-align: left;
     min-height: 25px;
@@ -132,6 +134,7 @@ figcaption
     left: 125px;
     font-size: 20;
 }
+
 /*
 table
 {
