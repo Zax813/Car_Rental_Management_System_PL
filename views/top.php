@@ -21,6 +21,7 @@
 					echo "<a href='index.php?action=home' name='equipList'>Samochody</a>";
 					echo "<a href='index.php?action=userList' name='userList'>Pracownicy</a>";
 					echo "<a href='index.php?action=clientList' name='clientList'>Klienci</a>";
+					echo "<a href='index.php?action=carInspectionList' name='carInspectionList'>Przeglądy</a>";
 					echo "<a href='index.php?action=equipDelivery' name='equipDelivery'>Dostawy</a>";
 					echo "<a href='index.php?action=showCart' name='showCart'>Koszyk"; if(isset($_SESSION['cart'])){ echo "(".count($_SESSION["cart"]).")"; } echo "</a>";
 					echo "<a href='index.php?action=showOrders' name='showOrders'>Zamówienia</a>";
