@@ -27,7 +27,9 @@ require_once(_ROOT_PATH.DIRECTORY_SEPARATOR.'functions.php');
 
 //Spis dostępnych podstron
 $actions = array('home',
+                'carInspectionAdd',
                 'carInspectionList',
+                'carRegistration',
                 'clientAdd',
                 'clientDetails',
                 'clientEdit',
@@ -86,7 +88,6 @@ else
 {
     $action = 'pageNotFound';
 }
-
 
 //Kolejność wykonywania działań przy odświeżeniu strony
 //Wykonanie logiki podstrony

@@ -10,7 +10,7 @@
 <?php
 if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") 
 {
-    //echo "<a href='index.php?action=userAdd' class='btn btn-info' name='userAdd'>Dodaj Klienta</a>";
+    echo "<a href='index.php?action=carInspectionAdd' class='btn btn-info' name='inspectionAdd'>Dodaj Przegląd</a>";
 }
 ?>
 

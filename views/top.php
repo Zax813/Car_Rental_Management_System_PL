@@ -3,9 +3,13 @@
 
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link  rel="stylesheet" href="css/bootstrap-icons.css">
+<link rel="stylesheet" href="css/jquery-ui.css">
 <link rel="stylesheet" href="css/domyslny-styl.css">
+
 <script src="./js/default-functions.js"></script>
 <script src="./js/jquery-3.6.1.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+
 
 </head>
 <header>
