@@ -24,6 +24,7 @@ try
     
     $stmt->execute();
 
+    $result = $stmt->fetchAll();
 } 
 catch (PDOException $e) {
     $errors['read'] = "Błąd: " . $e->getMessage();

@@ -14,7 +14,7 @@
 </div>
 
 <!-- Wyswietlenie samochodów -->
-<?php foreach ($stmt as $row) { ?>
+<?php foreach ($result as $row) { ?>
     <div class="card mb-3 mx-5">
         <div class="row no-gutters">
             <div class="col-md-4">

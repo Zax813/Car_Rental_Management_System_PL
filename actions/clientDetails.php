@@ -6,7 +6,7 @@ INNER JOIN MIASTO M ON K.IDMIASTO = M.IDMIASTO
 INNER JOIN KRAJ KR ON M.IDKRAJ = KR.IDKRAJ
 WHERE idklienta={$_SESSION['details']};");
 
-
+$result = $stmt->fetchAll();
 
 if (array_key_exists('event', $_GET)) 
 {

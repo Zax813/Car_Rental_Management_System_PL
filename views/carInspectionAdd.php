@@ -1,22 +1,65 @@
-<h2 class='form-outline mx-5 my-3'>Dodaj przegląd</h2>
+<h2 class='form-outline mx-5 my-2'>Dodaj przegląd</h2>
 
-<div class='form-outline mx-5 my-4'>
+<div class='form-outline mx-5 my-3'>
+    <a class='btn btn-info btn-sm' href='index.php?action=carInspectionAdd&event=list' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
+</div>
 
-    <!-- Formularz z polem do wpisywania numeru rejestracyjnego -->
-    <form action="carInspectionAdd.php" method="post">
-        <label for="numer">Numer rejestracyjny:</label>
-        <input type="text" id="numer" name="numer">
+<!-- Formularz wpisywania nowego przeglądu -->
+<div class='form-outline mx-5 d-flex justify-content-center'>
+    <form class='form-horizontal' action="index.php?action=carInspectionAdd" method="post">
 
-        <div class='form-outline mx-5 d-flex justify-content-center'>
-            <input type="submit" value="Dodaj samochód">
+        <!-- Pole wpisywania daty przeglądu -->
+        <div class='form-group mb-2'>
+            <label class='control-label' for="dataprzeglad">Data przeglądu:</label>
+            <div class='controls'>
+                <input type="date" id="dataprzeglad" name="dataprzeglad" value="<?php echo $today; ?>">
+                <?php if (array_key_exists('dataprzeglad', $errors)) : ?><span><?php echo $errors['dataprzeglad'] ?></span><?php endif; ?>
+            </div>
         </div>
+
+        <!-- Pole wpisywania daty ważności przeglądu -->
+        <div class='form-group mb-2'>
+            <label class='control-label' for="waznosc">Data ważności:</label>
+            <div class='controls'>
+                <input type="date" id="waznosc" name="waznosc" value="<?php echo $nextYear; ?>">
+                <?php if (array_key_exists('waznosc', $errors)) : ?><span><?php echo $errors['waznosc'] ?></span><?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Pole wpisywania numeru rejestracyjnego -->
+        <div class='form-group mb-2'>
+            <label class='control-label' for="numer">Numer rejestracyjny:</label>
+            <div class='controls'>
+                <input type="text" id="numer" name="numer">
+                <?php if (array_key_exists('numer', $errors)) : ?><span><?php echo $errors['numer'] ?></span><?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Pole wpisywania uwag -->
+        <div class='form-group mb-2'>
+            <label class='control-label' for="uwagi">Uwagi:</label>
+            <div class='controls'>
+                <textarea id="uwagi" name="uwagi" rows="5" cols="23"></textarea>
+            </div>
+        </div>
+
+        <div class='form-group mb-2'>
+            <label class='control-label'></label>
+            <input type='submit' class='btn btn-info' value='Zatwierdź' name='acceptAdd' />
+        </div>
+
+        <div class='form-group mb-2'>
+            <?php if (array_key_exists('all', $errors)) : ?><span><?php echo $errors['all'] ?></span><?php endif; ?>
+            <span class='ok'><?php echo $info; ?></span>
+        </div>
+
     </form>
 </div>
 
 <script>
     $(function() {
         $("#numer").autocomplete({
-            source: <?php echo getData($db)?> 
+            source: <?php echo getData($db) ?>
         });
     });
 </script>

@@ -5,7 +5,7 @@
 <div class='form-outline mx-5 my-2'>
     <table class="table">
         <?php
-        foreach ($stmt as $row)
+        foreach ($$result as $row)
             echo "<tr>
                 <td>ID
                 <td>{$row['idpracownika']}

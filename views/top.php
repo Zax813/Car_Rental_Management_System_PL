@@ -5,11 +5,12 @@
 <link  rel="stylesheet" href="css/bootstrap-icons.css">
 <link rel="stylesheet" href="css/jquery-ui.css">
 <link rel="stylesheet" href="css/domyslny-styl.css">
+<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
 
 <script src="./js/default-functions.js"></script>
 <script src="./js/jquery-3.6.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
-
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
 </head>
 <header>
@@ -26,7 +27,7 @@
 					echo "<a href='index.php?action=userList' name='userList'>Pracownicy</a>";
 					echo "<a href='index.php?action=clientList' name='clientList'>Klienci</a>";
 					echo "<a href='index.php?action=carInspectionList' name='carInspectionList'>Przeglądy</a>";
-					echo "<a href='index.php?action=equipDelivery' name='equipDelivery'>Dostawy</a>";
+					echo "<a href='index.php?action=carServiceList' name='carServiceList'>Serwisy</a>";
 					echo "<a href='index.php?action=showCart' name='showCart'>Koszyk"; if(isset($_SESSION['cart'])){ echo "(".count($_SESSION["cart"]).")"; } echo "</a>";
 					echo "<a href='index.php?action=showOrders' name='showOrders'>Zamówienia</a>";
 				echo "</div>";
