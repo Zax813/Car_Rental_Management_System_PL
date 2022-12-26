@@ -61,7 +61,8 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
             if (count($errors) == 0) {
                 try {
                     if (empty($fields['haslo'])) {
-                        $ustmt = $db->prepare("UPDATE pracownicy SET login=:login, imie=:imie, nazwisko=:nazwisko, uprawnienia=:uprawnienia, telefon=:telefon, email=:email, zatrudniony=:zatrudniony WHERE idpracownika={$_SESSION['edit']}");
+                        $ustmt = $db->prepare("UPDATE pracownicy SET login=:login, imie=:imie, nazwisko=:nazwisko, uprawnienia=:uprawnienia, telefon=:telefon, email=:email, zatrudniony=:zatrudniony 
+                                                WHERE idpracownika={$_SESSION['edit']}");
                     } else {
                         $ustmt = $db->prepare("UPDATE pracownicy SET login=:login, haslo=:haslo, imie=:imie, nazwisko=:nazwisko, uprawnienia=:uprawnienia, telefon=:telefon, email=:email, zatrudniony=:zatrudniony WHERE idpracownika={$_SESSION['edit']}");
                         $ustmt->bindValue(':haslo', hash('sha256', $_POST['haslo']));

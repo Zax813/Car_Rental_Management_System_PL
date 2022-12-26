@@ -3,7 +3,7 @@
 function getData($db) {
     
     // Pobierz dostępne numery rejestracyjne z bazy danych
-    $stmt = $db->prepare("SELECT rejestracja FROM auta WHERE SPRAWNY = TRUE;");
+    $stmt = $db->prepare("SELECT rejestracja FROM auta WHERE AKTYWNY = TRUE;");
     $stmt->execute();
 
     $rejestracje = $stmt->fetchAll();
@@ -41,19 +41,24 @@ $errors = array();
 $info = "";
 
 
-if (isset($_POST["acceptAdd"])) {
+if (isset($_POST["acceptAdd"])) 
+{
 
-    if (empty($fields['numer'])) {
+    if (empty($fields['numer'])) 
+    {
         $errors['numer'] = 'Pole jest wymagane.';
     }
 
-    if (empty($fields['dataprzeglad'])) {
-        $errors['dataprzeglad'] = 'Pole jest wymagane.';
+    if (empty($fields['dataprzeglad']) || empty($fields['waznosc'])) 
+    {
+        $errors['all'] = 'Pola dat są wymagane.';
     }
 
-    if (empty($fields['waznosc'])) {
-        $errors['waznosc'] = 'Pole jest wymagane.';
+    if($fields['waznosc']<$fields['dataprzeglad'])
+    {
+        $errors['all'] = 'Data ważności nie może być wcześniejsza niż data przeglądu';
     }
+
 
     if (empty($fields['uwagi'])) {
         $_POST['uwagi'] = 'Brak';

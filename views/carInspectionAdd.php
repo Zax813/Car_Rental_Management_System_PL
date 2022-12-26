@@ -8,29 +8,29 @@
 <div class='form-outline mx-5 d-flex justify-content-center'>
     <form class='form-horizontal' action="index.php?action=carInspectionAdd" method="post">
 
+    <div class="row mb-2">
         <!-- Pole wpisywania daty przeglądu -->
-        <div class='form-group mb-2'>
+        <div class='col-md-6 mb-2'>
             <label class='control-label' for="dataprzeglad">Data przeglądu:</label>
             <div class='controls'>
-                <input type="date" id="dataprzeglad" name="dataprzeglad" value="<?php echo $today; ?>">
-                <?php if (array_key_exists('dataprzeglad', $errors)) : ?><span><?php echo $errors['dataprzeglad'] ?></span><?php endif; ?>
+                <input type="date" class='col-md-12'  id="dataprzeglad" name="dataprzeglad" value="<?php echo $today; ?>">
             </div>
         </div>
 
         <!-- Pole wpisywania daty ważności przeglądu -->
-        <div class='form-group mb-2'>
+        <div class='col-md-6 mb-2'>
             <label class='control-label' for="waznosc">Data ważności:</label>
             <div class='controls'>
-                <input type="date" id="waznosc" name="waznosc" value="<?php echo $nextYear; ?>">
-                <?php if (array_key_exists('waznosc', $errors)) : ?><span><?php echo $errors['waznosc'] ?></span><?php endif; ?>
+                <input type="date" class='col-md-12' id="waznosc" name="waznosc" value="<?php echo $nextYear; ?>">
             </div>
         </div>
+    </div>
 
         <!-- Pole wpisywania numeru rejestracyjnego -->
         <div class='form-group mb-2'>
             <label class='control-label' for="numer">Numer rejestracyjny:</label>
             <div class='controls'>
-                <input type="text" id="numer" name="numer">
+                <input type="text" class="col-md-12" id="numer" name="numer">
                 <?php if (array_key_exists('numer', $errors)) : ?><span><?php echo $errors['numer'] ?></span><?php endif; ?>
             </div>
         </div>
@@ -39,13 +39,13 @@
         <div class='form-group mb-2'>
             <label class='control-label' for="uwagi">Uwagi:</label>
             <div class='controls'>
-                <textarea id="uwagi" name="uwagi" rows="5" cols="23"></textarea>
+                <textarea class="col-md-12" id="uwagi" name="uwagi" rows="5" cols="23"></textarea>
             </div>
         </div>
 
-        <div class='form-group mb-2'>
+        <div class='form-group my-4'>
             <label class='control-label'></label>
-            <input type='submit' class='btn btn-info' value='Zatwierdź' name='acceptAdd' />
+            <input type='submit' class='btn btn-info col-md-12' value='Zatwierdź' name='acceptAdd' />
         </div>
 
         <div class='form-group mb-2'>
