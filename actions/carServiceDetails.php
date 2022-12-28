@@ -6,7 +6,7 @@ $stmt = $db->query("SELECT IDSERWIS, MR.NAZWAMARKI AS MARKA, MD.NAZWAMODEL AS MO
                     INNER JOIN MODEL MD ON A.IDMODEL=MD.IDMODEL
                     INNER JOIN MARKA MR ON MD.IDMARKA=MR.IDMARKA
                     INNER JOIN PRACOWNICY P ON P.IDPRACOWNIKA=S.IDPRACOWNIKA
-                    WHERE IDSERWIS={$_SESSION['details']};");
+                    WHERE IDSERWIS={$_SESSION['serviceDetails']};");
 
 $result = $stmt -> fetchAll();
 
@@ -14,14 +14,14 @@ if (array_key_exists('event', $_GET))
 {
     if ($_GET['event'] == "edit") 
     {
-        $_SESSION['edit'] = $_SESSION['details'];
-        unset($_SESSION['details']);
+        $_SESSION['serviceEdit']= $_SESSION['serviceDetails'];
+        unset($_SESSION['serviceDetails']);
         redirect(url('carServiceEdit'));
     }
 
     if ($_GET['event'] == "back") 
     {
-        unset($_SESSION['details']);
+        unset($_SESSION['serviceDetails']);
         redirect(url('carServiceList'));
     }
 }

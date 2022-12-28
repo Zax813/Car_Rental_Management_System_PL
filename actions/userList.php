@@ -11,13 +11,13 @@ if ((array_key_exists('event', $_GET)))
 {
     if ($_GET['event'] == "add") 
     {
-        $_SESSION['edit'] = $_GET['value'];
+        $_SESSION['userEdit'] = $_GET['value'];
         redirect(url('userEdit'));
     }
 
     if ($_GET['event'] == "details") 
     {
-        $_SESSION['details'] = $_GET['value'];
+        $_SESSION['userDetails'] = $_GET['value'];
         redirect(url('userDetails'));
     }
 }

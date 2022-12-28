@@ -15,7 +15,6 @@ body
 */
 header
 {
-    
 	background-color:#003366;
 	text-align: left;
     min-height: 25px;
@@ -24,7 +23,8 @@ header
 
 a
 {
-    color:darkturquoise ;
+   
+    text-decoration: none;
 }
 
 /*
@@ -135,33 +135,7 @@ figcaption
     font-size: 20;
 }
 
-/*
-table
-{
-    position: relative;
-    left: 100px;
-    font-size: 18px;
-    border: 1px solid black;
-    border-collapse: collapse;
-    text-align: center;
-}
 
-th
-{
-    border: 1px solid black;
-    color:white;
-    background-color: steelblue;
-    padding: 4px;
-}
-
-td
-{
-    border: 1px solid white;
-    padding-left: 6px;
-    padding-right: 6px;
-    max-width: 300px;
-}
-*/
 .ok
 {
     color:green;

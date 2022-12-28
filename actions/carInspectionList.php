@@ -12,12 +12,12 @@ $result = $stmt->fetchAll();
 /*
 if ((array_key_exists('event', $_GET))) {
     if ($_GET['event'] == "edit") {
-        $_SESSION['edit'] = $_GET['value'];
+        $_SESSION['inspectionEdit'] = $_GET['value'];
         redirect(url('clientEdit'));
     }
 
     if ($_GET['event'] == "details") {
-        $_SESSION['details'] = $_GET['value'];
+        $_SESSION['inspectionDetails'] = $_GET['value'];
         redirect(url('clientDetails'));
     }
 }

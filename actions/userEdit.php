@@ -6,13 +6,13 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
     {
         if($_GET['event']=='list')
         {
-            unset($_SESSION['edit']);
+            unset($_SESSION['userEdit']);
             redirect(url('userList'));
         }
     }
     
-    if (isset($_SESSION['edit'])) {
-        $stmt = $db->query("SELECT * FROM pracownicy WHERE idpracownika = {$_SESSION['edit']}");
+    if (isset($_SESSION['userEdit'])) {
+        $stmt = $db->query("SELECT * FROM pracownicy WHERE idpracownika = {$_SESSION['userEdit']}");
 
         foreach ($stmt as $row) {
             $fields['imie'] = array_key_exists('imie', $_POST) ? $_POST['imie'] : $row['imie'];
@@ -62,9 +62,9 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                 try {
                     if (empty($fields['haslo'])) {
                         $ustmt = $db->prepare("UPDATE pracownicy SET login=:login, imie=:imie, nazwisko=:nazwisko, uprawnienia=:uprawnienia, telefon=:telefon, email=:email, zatrudniony=:zatrudniony 
-                                                WHERE idpracownika={$_SESSION['edit']}");
+                                                WHERE idpracownika={$_SESSION['userEdit']}");
                     } else {
-                        $ustmt = $db->prepare("UPDATE pracownicy SET login=:login, haslo=:haslo, imie=:imie, nazwisko=:nazwisko, uprawnienia=:uprawnienia, telefon=:telefon, email=:email, zatrudniony=:zatrudniony WHERE idpracownika={$_SESSION['edit']}");
+                        $ustmt = $db->prepare("UPDATE pracownicy SET login=:login, haslo=:haslo, imie=:imie, nazwisko=:nazwisko, uprawnienia=:uprawnienia, telefon=:telefon, email=:email, zatrudniony=:zatrudniony WHERE idpracownika={$_SESSION['userEdit']}");
                         $ustmt->bindValue(':haslo', hash('sha256', $_POST['haslo']));
                     }
 
@@ -92,7 +92,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                 }
 
                 if (count($errors) == 0) {
-                    unset($_SESSION['edit']);
+                    unset($_SESSION['userEdit']);
                     redirect(url('userList'));
                 }
             }

@@ -6,16 +6,16 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
     {
         if($_GET['event']=='list')
         {
-            unset($_SESSION['edit']);
+            unset($_SESSION['serviceEdit']);
             redirect(url('carServiceList'));
         }
     }
     
-    if (isset($_SESSION['edit'])) {
+    if (isset($_SESSION['serviceEdit'])) {
         $stmt = $db->query("SELECT idserwis, A.rejestracja, idpracownika, datapoczatek, datakoniec, nazwaserwisu, opis, s.uwagi, koszt
                             FROM serwis S
                             INNER JOIN AUTA A ON S.IDAUTA=A.IDAUTO 
-                            WHERE idserwis = {$_SESSION['edit']}");
+                            WHERE idserwis = {$_SESSION['serviceEdit']}");
 
         foreach ($stmt as $row) {
             $fields['numer'] = array_key_exists('numer', $_POST) ? $_POST['numer'] : $row['rejestracja'];
@@ -83,7 +83,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                     {
                         $ustmt = $db->prepare("UPDATE serwis 
                                                 SET idauta=:idauta, datapoczatek=:datapoczatek, datakoniec=:datakoniec, nazwaserwisu=:nazwaserwisu, opis=:opis, uwagi=:uwagi, koszt=:koszt
-                                                WHERE idserwis={$_SESSION['edit']};");
+                                                WHERE idserwis={$_SESSION['serviceEdit']};");
         
                         $ustmt->bindValue(':idauta', $idauta, PDO::PARAM_INT);
                         $ustmt->bindValue(':datapoczatek', $_POST['datapoczatek']);
@@ -105,7 +105,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                 }
 
                 if (count($errors) == 0) {
-                    unset($_SESSION['edit']);
+                    unset($_SESSION['serviceEdit']);
                     redirect(url('carServiceList'));
                 }
             }
