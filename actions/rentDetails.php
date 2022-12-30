@@ -15,7 +15,7 @@ $row = $stmt -> fetch();
 if($row['datakoniec'] == null || !$row['datakoniec'])
 {
     $przejechano = '-';
-    $dni = '-';
+    $dni = (strtotime(date('Y-m-d')) - strtotime($row['datapoczatek'])) / 60 / 60 / 24;
 }
 else
 {

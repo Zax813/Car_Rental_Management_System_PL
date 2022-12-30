@@ -16,17 +16,27 @@
                 <td><a href='index.php?action=rentDetails&event=client'>{$row['imie']} {$row['nazwisko']}</a>
             <tr>
                 <td>Kontakt
-                <td>{$row['telefon']} | | {$row['email']}
+                <td><i class='bi bi-telephone'></i> {$row['telefon']} || <i class='bi bi-envelope-at'></i> {$row['email']}
             <tr>
                 <td>Pracownik
                 <td><a href='index.php?action=rentDetails&event=user'>{$row['pracimie']} {$row['pracnazwisko']} ({$row['login']})
             <tr>
                 <td>Czas wypożyczenia
-                <td>{$row['datapoczatek']} - {$row['datakoniec']} ($dni dni)
-            <tr>
+                <td>{$row['datapoczatek']}";
+                if($row['datakoniec'] == null || !$row['datakoniec']){
+                    echo " - trwa ($dni dni)";
+                }else{
+                    echo " - {$row['datakoniec']} ($dni dni)"; }
+
+            echo "<tr>
                 <td>Przebieg
-                <td> {$row['przebiegstart']} - {$row['przebiegkoniec']} ($przejechano km)
-            <tr>
+                <td> {$row['przebiegstart']}";
+                if($row['przebiegkoniec'] == null || !$row['przebiegkoniec']){
+                    echo " - trwa";
+                }else{
+                    echo " - {$row['przebiegkoniec']} ($przejechano km)"; }
+            
+            echo "<tr>
                 <td>Koszt
                 <td>{$row['suma']}
             <tr>
@@ -51,8 +61,8 @@
 <div class='form-outline mx-5 my-2'>
     <?php
     if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") {
-        echo "<a class='btn btn-info btn-sm mr-1' href='index.php?action=carServiceDetails&event=back' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>";
-        echo "<a class='btn btn-warning btn-sm mx-2' href='index.php?action=carServiceDetails&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i> Edytuj</a>";
+        echo "<a class='btn btn-info btn-sm mr-1' href='index.php?action=rentDetails&event=back' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>";
+        echo "<a class='btn btn-warning btn-sm mx-2' href='index.php?action=rentDetails&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i> Edytuj</a>";
     }
     ?>
 </div>

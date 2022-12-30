@@ -31,14 +31,12 @@ function tableFilter() {
 }
 
 
-
-//---Old-Project---//
-function onChange()
+function onChangeCity()
 {
-    data = new FormData(document.getElementById("addEq"));
+    data = new FormData(document.getElementById("rentAddForm"));
 
   $.ajax({
-    url  : "index.php?action=addEquip",  //your page
+    url  : "index.php?action=rentAdd",  //your page
     type: "POST",                   // Type of request to be send, called as method
     data:  data,     // Data sent to server, a set of key/value pairs representing form fields and values
     contentType: false,             // The content type used when sending data to the server. Default is: "application/x-www-form-urlencoded"
@@ -51,6 +49,8 @@ function onChange()
 });
 }
 
+
+//---Old-Project---//
 function onChangeModel()
 {
     data = new FormData(document.getElementById("addDel"));

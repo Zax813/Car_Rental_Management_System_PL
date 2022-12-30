@@ -8,6 +8,41 @@ $fields['sortuj'] = array_key_exists('sortuj', $_POST) ? $_POST['sortuj'] : 'KOD
 $errors = array();
 */
 
+if (array_key_exists('event', $_GET)) 
+{
+    if ($_GET['event'] == "add") 
+    {
+        $check = $db ->prepare("SELECT IDAUTO, DOSTEPNY
+                                FROM AUTA WHERE IDAUTO = :id;");
+        $check -> bindValue(':id', $_GET['value']);
+        $check -> execute();
+        $row = $check -> fetch();
+
+        if($row['dostepny']==true)
+        {
+            $_SESSION['rentAdd'] = $_GET['value'];
+            redirect(url('rentAdd'));
+        }
+        else
+        {
+            redirect(url('home'));
+        }
+    }
+
+    if ($_GET['event'] == "edit") 
+    {
+        $_SESSION['carEdit'] = $_GET['value'];
+        redirect(url('carEdit'));
+    }
+
+    if ($_GET['event'] == "details") 
+    {
+        $_SESSION['carDetails'] = $_GET['value'];
+        redirect(url('carDetails'));
+    }
+}
+
+
 $dbmarka = $db->query('SELECT * FROM AUTA ORDER BY IDSEGMENT;');
 $dbtyp = $db->query('SELECT * FROM MODEL;');
 

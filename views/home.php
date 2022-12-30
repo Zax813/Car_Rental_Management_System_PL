@@ -1,8 +1,5 @@
 <meta charset="utf-8" />
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="./views/functions.js"></script>
-
 <h2 class='form-outline mx-5 my-2'>Samochody</h2>
 
 <div class='form-outline mx-5 my-3'>
@@ -48,16 +45,16 @@
                         echo "<ul class='list-group list-group-flush'> 
                             <li class='mb-1'>{$row['paliwo']}</li>
                             <li class='mb-1'> </li>
-                            <li class='mb-1' style='background-color: crimson;'> Cena 24h: {$row['cenadoba']}</li>
-                            <li class='mb-1' style='background-color: crimson;'> Cena KM:  {$row['cenakm']}</li>
+                            <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena 24h: {$row['cenadoba']} zł</li>
+                            <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena KM:  {$row['cenakm']} zł</li>
                             </ul>";
 
                         if ($row['dostepny'] == true)
-                            echo "<p class='card-text mt-1'><small class='ok'>Dostępny</small></p>";
+                            echo "<small class='ok'>Dostępny</small>
+                            <a class='btn btn-success btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=add' title='Wypożycz' name='rentAdd'><i class='bi bi-calendar-plus'></i></a>";
                         else
                             echo "<p class='card-text mt-1'><small style='color: red;'>Nie dostępny</small></p>";
                         ?>
-                        <!--<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
                     </div>
                 </div>
             </div>
@@ -69,6 +66,7 @@
 ?>
 
 <!--
+---------------------------------------------------------------
 <p></p>
 
 <form method="post" action="index.php?action=home" id="filter">

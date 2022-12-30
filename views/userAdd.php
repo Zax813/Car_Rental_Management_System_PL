@@ -24,7 +24,7 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 			<div class='form-group mb-2'>
 				<label class='control-label' for='nazwisko'>Nazwisko</label>
 				<div class='controls'>
-					<input id='naziwsko' type='text' name='nazwisko' value='<?php echo $fields['nazwisko'] ?>' />
+					<input id='nazwisko' type='text' name='nazwisko' value='<?php echo $fields['nazwisko'] ?>' />
 					<?php if (array_key_exists('nazwisko', $errors)) : ?><span><?php echo $errors['nazwisko'] ?></span><?php endif; ?>
 				</div>
 			</div>
@@ -56,29 +56,29 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 			<div class='form-group mb-2'>
 				<label class='control-label' for='uprawnienia'>Uprawnienia</label>
 				<div class='controls'>
-				<select id='uprawnienia' name='uprawnienia'>
-					<option>admin</option>
-					<option>kierownik</option>
-					<option selected>pracownik</option>
-				</select>
-				<?php if (array_key_exists('uprawnienia', $errors)) : ?><span><?php echo $errors['uprawnienia'] ?></span><?php endif; ?>
+					<select id='uprawnienia' name='uprawnienia'>
+						<option>admin</option>
+						<option>kierownik</option>
+						<option selected>pracownik</option>
+					</select>
+					<?php if (array_key_exists('uprawnienia', $errors)) : ?><span><?php echo $errors['uprawnienia'] ?></span><?php endif; ?>
 				</div>
 			</div>
 
 			<div class='form-group mb-2'>
 				<label class='control-label' for='telefon'>Telefon</label>
 				<div class='controls'>
-				<input id='telefon' type='number' name='telefon' value='<?php echo $fields['telefon'] ?>' />
-				<?php if (array_key_exists('telefon', $errors)) : ?><span><?php echo $errors['telefon'] ?></span><?php endif; ?>
+					<input id='telefon' type='number' name='telefon' value='<?php echo $fields['telefon'] ?>' />
+					<?php if (array_key_exists('telefon', $errors)) : ?><span><?php echo $errors['telefon'] ?></span><?php endif; ?>
 				</div>
 			</div>
 
 			<div class='form-group mb-2'>
 				<label class='control-label' for='email'>E-mail</label>
 				<div class='controls'>
-				<input id='email' type='email' name='email' value='<?php echo $fields['email'] ?>' />
-				<?php if (array_key_exists('email', $errors)) : ?><span><?php echo $errors['email'] ?></span><?php endif; ?>
-			</div>
+					<input id='email' type='email' name='email' value='<?php echo $fields['email'] ?>' />
+					<?php if (array_key_exists('email', $errors)) : ?><span><?php echo $errors['email'] ?></span><?php endif; ?>
+				</div>
 			</div>
 
 			<div class='form-group mb-2'>

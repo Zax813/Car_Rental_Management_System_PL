@@ -65,10 +65,10 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         {
                             if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                             {
-                                echo "<a class='btn btn-info btn-sm' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
-                                echo "<a class='btn btn-warning btn-sm mx-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a>";
+                                echo "<a class='btn btn-info btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
+                                echo "<a class='btn btn-warning btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a>";
                             } 
-                            echo "<a class='btn btn-success btn-sm' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=end' title='Zakończ' name='end'><i class='bi bi-calendar-check'></i></a></td>";
+                            echo "<a class='btn btn-success btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=end' title='Zakończ' name='end'><i class='bi bi-calendar-check'></i></a></td>";
                         }
                         echo "</tr>";
                     }
