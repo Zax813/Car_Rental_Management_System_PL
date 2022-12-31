@@ -8,7 +8,7 @@ function validtel($tel)
     return preg_match($reg, $tel);
 }
 
-function validSelectDB($text)
+function validTextDB($text)
 {
     $formatted_text = mb_strtolower($text, 'UTF-8'); // zamieniamy wszystkie litery na małe
     $words = explode(' ', $formatted_text); // rozdzielamy tekst na poszczególne słowa
@@ -18,6 +18,15 @@ function validSelectDB($text)
     }, $words);
 
     $formatted_text = implode(' ', $formatted_words); // łączymy słowa w jeden ciąg znaków
+
+    $words = explode('-', $formatted_text);
+    $formatted_words = array_map(function($word) {
+        return ucfirst($word); // zamieniamy pierwszą literę słowa na dużą
+    }, $words);
+
+    $formatted_text = implode('-', $formatted_words); // łączymy słowa w jeden ciąg znaków
+
+
     return $formatted_text; // "To Jest Przykładowy Tekst"
 }
 

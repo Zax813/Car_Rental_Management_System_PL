@@ -68,21 +68,22 @@ if (isset($_SESSION['rentAdd'])) {
     $fields['numer'] = array_key_exists('numer', $_POST) ? $_POST['numer'] : $row['numer'];
     $fields['przebiegstart'] = array_key_exists('przebiegstart', $_POST) ? $_POST['przebiegstart'] : $row['przebiegstart'];
     
-    $fields['imie'] = array_key_exists('imie', $_POST) ? $_POST['imie'] : '';
-    $fields['nazwisko'] = array_key_exists('nazwisko', $_POST) ? $_POST['nazwisko'] : '';
+    $fields['imie'] = array_key_exists('imie', $_POST) ? validTextDB($_POST['imie']) : '';
+    $fields['nazwisko'] = array_key_exists('nazwisko', $_POST) ? validTextDB($_POST['nazwisko']) : '';
     $fields['pesel'] = array_key_exists('pesel', $_POST) ? $_POST['pesel'] : '';
     $fields['rodzajdokumentu'] = array_key_exists('rodzajdokumentu', $_POST) ? $_POST['rodzajdokumentu'] : 'dowód osobisty';
     $fields['nrdokumentu'] = array_key_exists('nrdokumentu', $_POST) ? $_POST['nrdokumentu'] : '';
     $fields['telefon'] = array_key_exists('telefon', $_POST) ? $_POST['telefon'] : '';
     $fields['email'] = array_key_exists('email', $_POST) ? $_POST['email'] : '';
-    $fields['kraj'] = array_key_exists('kraj', $_POST) ? $_POST['kraj'] : '';
-    $fields['miasto'] = array_key_exists('miasto', $_POST) ? $_POST['miasto'] : '';
-    $fields['ulica'] = array_key_exists('ulica', $_POST) ? $_POST['ulica'] : '';
+    $fields['kraj'] = array_key_exists('kraj', $_POST) ? validTextDB($_POST['kraj']) : '';
+    $fields['miasto'] = array_key_exists('miasto', $_POST) ? validTextDB($_POST['miasto']) : '';
+    $fields['ulica'] = array_key_exists('ulica', $_POST) ? validTextDB($_POST['ulica']) : '';
     $fields['nrdomu'] = array_key_exists('nrdomu', $_POST) ? $_POST['nrdomu'] : '';
     $fields['nrmieszkania'] = array_key_exists('nrmieszkania', $_POST) ? $_POST['nrmieszkania'] : '';
     $fields['kodpocztowy'] = array_key_exists('kodpocztowy', $_POST) ? $_POST['kodpocztowy'] : '';
 
     $fields['uwagi'] = array_key_exists('uwagi', $_POST) ? $_POST['uwagi'] : '';
+    $fields['disabled'] = array_key_exists('disabled', $fields) ? $fields['disabled'] : '';
 
     $errors = array();
     $info = "";
@@ -101,6 +102,8 @@ if (isset($_SESSION['rentAdd'])) {
 
         if (empty($errors['telefon']) )
         {
+            $fields['disabled'] = '';
+
             $check = $db->prepare("SELECT idklienta, rodzajdokumentu, nrdokumentu, pesel, imie, nazwisko, telefon, email, KR.NAZWAKRAJ AS KRAJ, M.nazwamiasto AS MIASTO, ulica, nrdomu, nrmieszkania, kodpocztowy, uwagi
                                 FROM KLIENCI K
                                 INNER JOIN MIASTO M ON K.IDMIASTO = M.IDMIASTO
@@ -111,10 +114,11 @@ if (isset($_SESSION['rentAdd'])) {
             $check->execute();
             $clientInfo = $check->fetch();
 
+
             if ($clientInfo) 
             {
                 $row['idklienta'] = $clientInfo['idklienta'];
-                $fields['disabled'] = true;
+                $fields['disabled'] = 'disabled';
                 $fields['imie'] = $clientInfo['imie'];
                 $fields['nazwisko'] = $clientInfo['nazwisko'];
                 $fields['pesel'] = $clientInfo['pesel'];
@@ -137,6 +141,12 @@ if (isset($_SESSION['rentAdd'])) {
         if (empty($fields['datapoczatek'])) {
             $errors['all'] = 'Data rozpoczęcia jest wymagana.';
         }
+        else{
+            if($fields['datapoczatek'] < $today)
+            {
+                $errors['all'] = 'Data rozpoczęcia nie może być wcześniej niż dzisiejsza '.$today;
+            }
+        }
 
         if ($fields['datakoniec'] != null || $fields['datakoniec'] != '') {
             if ($fields['datapoczatek'] > $fields['datakoniec']) {
@@ -147,21 +157,27 @@ if (isset($_SESSION['rentAdd'])) {
         if (empty($fields['przebiegstart'])) {
             $errors['przebiegstart'] = 'Pole jest wymagane.';
         }
+        else{
+            if($fields['przebiegstart'] < $row['przebiegstart'])
+            {
+                $errors['przebiegstart'] = "Podany przebieg jest mniejszy od aktualnego ( ".$row['przebiegstart']." km)";
+            }
+        }
 
         if (empty($fields['imie'])) {
-            $errors['imie'] = 'Pole jest wymagane.';
+            $errors['imie'] = 'Imię jest wymagane.';
         }
 
         if (empty($fields['nazwisko'])) {
-            $errors['nazwisko'] = 'Pole jest wymagane.';
+            $errors['nazwisko'] = 'Nazwisko jest wymagane.';
         }
 
         if (empty($fields['rodzajdokumentu'])) {
-            $errors['rodzajdokumentu'] = 'Pole jest wymagane.';
+            $errors['rodzajdokumentu'] = 'Rodzaj dokumentu jest wymagany.';
         }
 
         if (empty($fields['nrdokumentu'])) {
-            $errors['nrdokumentu'] = 'Pole jest wymagane.';
+            $errors['nrdokumentu'] = 'Numer dokumentu jest wymagany.';
         }
 
         if (!empty($fields['telefon'])) {
@@ -171,27 +187,27 @@ if (isset($_SESSION['rentAdd'])) {
         }
         else
         {
-            $errors['telefon'] = 'Pole jest wymagane.';
+            $errors['telefon'] = 'Telefon jest wymagany.';
         }
 
         if (empty($fields['kraj'])) {
-            $errors['kraj'] = 'Pole jest wymagane.';
+            $errors['kraj'] = 'Kraj jest wymagany.';
         }
 
         if (empty($fields['miasto'])) {
-            $errors['miasto'] = 'Pole jest wymagane.';
+            $errors['miasto'] = 'Miasto jest wymagane.';
         }
 
         if (empty($fields['ulica'])) {
-            $errors['ulica'] = 'Pole jest wymagane.';
+            $errors['ulica'] = 'Ulica jest wymagana.';
         }
 
         if (empty($fields['nrdomu'])) {
-            $errors['nrdomu'] = 'Pole jest wymagane.';
+            $errors['nrdomu'] = 'Nr domu jest wymagany.';
         }
 
         if (empty($fields['kodpocztowy'])) {
-            $errors['kodpocztowy'] = 'Pole jest wymagane.';
+            $errors['kodpocztowy'] = 'Kod pocztowy jest wymagany.';
         }
 
         if (empty($fields['uwagi'])) {
@@ -211,7 +227,7 @@ if (isset($_SESSION['rentAdd'])) {
                 {
                     //Sprawdzamy czy kraj klienta występuje w tabeli kraj
                     $pstmt = $db->prepare("SELECT IDKRAJ FROM KRAJ WHERE NAZWAKRAJ=:kraj;");
-                    $pstmt->bindValue(':kraj', $_POST['kraj']);
+                    $pstmt->bindValue(':kraj', $fields['kraj']);
                     $pstmt->execute();
                     $idkraj = $pstmt->fetchColumn();
 
@@ -219,7 +235,7 @@ if (isset($_SESSION['rentAdd'])) {
                     if(!isset($idkraj))
                     {
                         $pstmt = $db->prepare("INSERT INTO KRAJ( NAZWAKRAJ) VALUES :kraj;");
-                        $pstmt->bindValue(':kraj', $_POST['kraj']);
+                        $pstmt->bindValue(':kraj', $fields['kraj']);
                         $pstmt->execute();
 
                         $idkraj = $db->lastInsertId();
@@ -227,7 +243,7 @@ if (isset($_SESSION['rentAdd'])) {
 
                     //Sprawdzamy czy miasto klienta występuje w tabeli miasto
                     $pstmt = $db->prepare("SELECT IDMIASTO FROM MIASTO WHERE NAZWAMIASTO=:miasto;");
-                    $pstmt->bindValue(':miasto', $_POST['miasto']);
+                    $pstmt->bindValue(':miasto', $fields['miasto']);
                     $pstmt->execute();
                     $idmiasto = $pstmt->fetchColumn();
 
@@ -236,7 +252,7 @@ if (isset($_SESSION['rentAdd'])) {
                     {
                         $pstmt = $db->prepare("INSERT INTO MIASTO( IDKRAJ, NAZWAMIASTO) VALUES :idkraj, :miasto;");
                         $pstmt->bindValue(':idkraj', $idkraj, PDO::PARAM_INT);
-                        $pstmt->bindValue(':miasto', $_POST['miasto']);
+                        $pstmt->bindValue(':miasto', $fields['miasto']);
                         $pstmt->execute();
 
                         $idmiasto = $db->lastInsertId();
@@ -246,24 +262,25 @@ if (isset($_SESSION['rentAdd'])) {
                     $clientstmt = $db->prepare("INSERT INTO klienci(rodzajdokumentu, nrdokumentu, pesel, imie, nazwisko, telefon, email, idmiasto, ulica, nrdomu, nrmieszkania, kodpocztowy)
                     VALUES (:rodzajdokumentu, :nrdokumentu, :pesel, :imie, :nazwisko, :telefon, :email, :miasto, :ulica, :nrdomu, :nrmieszkania, :kodpocztowy);");
 
-                    $clientstmt->bindValue(':rodzajdokumentu', $_POST['rodzajdokumentu']);
-                    $clientstmt->bindValue(':nrdokumentu', $_POST['nrdokumentu']);
-                    $clientstmt->bindValue(':pesel', $_POST['pesel']);
-                    $clientstmt->bindValue(':imie', $_POST['imie']);
-                    $clientstmt->bindValue(':nazwisko', $_POST['nazwisko']);
-                    $clientstmt->bindValue(':telefon', $_POST['telefon']);
-                    $clientstmt->bindValue(':email', $_POST['email']);
+                    $clientstmt->bindValue(':rodzajdokumentu', $fields['rodzajdokumentu']);
+                    $clientstmt->bindValue(':nrdokumentu', $fields['nrdokumentu']);
+                    $clientstmt->bindValue(':pesel', $fields['pesel']);
+                    $clientstmt->bindValue(':imie', $fields['imie']);
+                    $clientstmt->bindValue(':nazwisko', $fields['nazwisko']);
+                    $clientstmt->bindValue(':telefon', $fields['telefon']);
+                    $clientstmt->bindValue(':email', $fields['email']);
                     $clientstmt->bindValue(':miasto', $idmiasto, PDO::PARAM_INT);
-                    $clientstmt->bindValue(':ulica', $_POST['ulica']);
-                    $clientstmt->bindValue(':nrdomu', $_POST['nrdomu']);
-                    $clientstmt->bindValue(':nrmieszkania', $_POST['nrmieszkania']);
-                    $clientstmt->bindValue(':kodpocztowy', $_POST['kodpocztowy']);
+                    $clientstmt->bindValue(':ulica', $fields['ulica']);
+                    $clientstmt->bindValue(':nrdomu', $fields['nrdomu']);
+                    $clientstmt->bindValue(':nrmieszkania', $fields['nrmieszkania']);
+                    $clientstmt->bindValue(':kodpocztowy', $fields['kodpocztowy']);
 
                     $clientstmt->execute();
 
                     $row['idklienta'] = $db->lastInsertId();
                 }
 
+                //Dodanie wypożyczenia do bazy
                 $stmt = $db->prepare("INSERT INTO public.wypozyczenia(
                     idauta, idklienta, idpracownika, datapoczatek, datakoniec, przebiegstart, zaplacono, uwagi)
                     VALUES (:idauta, :idklienta, :idpracownika, :datapoczatek, :datakoniec, :przebiegstart, FALSE, :uwagi);");
@@ -271,10 +288,10 @@ if (isset($_SESSION['rentAdd'])) {
                 $stmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
                 $stmt->bindValue(':idklienta', $row['idklienta'], PDO::PARAM_INT);
                 $stmt->bindValue(':idpracownika', $_SESSION['uid'], PDO::PARAM_INT);
-                $stmt->bindValue(':datapoczatek', $_POST['datapoczatek']);
-                $stmt->bindValue(':datakoniec', $_POST['datakoniec']);
-                $stmt->bindValue(':przebiegstart', $_POST['przebiegstart'], PDO::PARAM_INT);
-                $stmt->bindValue(':uwagi', $_POST['uwagi']);
+                $stmt->bindValue(':datapoczatek', $fields['datapoczatek']);
+                $stmt->bindValue(':datakoniec', $fields['datakoniec']);
+                $stmt->bindValue(':przebiegstart', $fields['przebiegstart'], PDO::PARAM_INT);
+                $stmt->bindValue(':uwagi', $fields['uwagi']);
                 
 
                 $stmt->execute();
@@ -288,9 +305,11 @@ if (isset($_SESSION['rentAdd'])) {
             }
 
             if (count($errors) == 0) {
+
                 $newid = $db->lastInsertId();
+                console_log("Dane dodane pomyślnie");
+                unset($_SESSION['rentAdd']);
                 redirect(url("rentList&value={$newid}&event=details"));
-                $info = "Przegląd dodany pomyślnie";
             }
         }
     }
