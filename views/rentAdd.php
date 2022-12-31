@@ -133,9 +133,9 @@
         <!-- Pole wybrania i wpisania numeru dokumentu -->
         <div class='row mb-2'>
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for='kraj' onchange="onChangeCity()">Kraj</label>
+                <label class='control-label' for='kraj'>Kraj</label>
                 <div class='controls'>
-                    <input type='text' class="col-md-12" id='kraj' name='kraj' value='<?php echo $fields['kraj'] ?>' />
+                    <input type='text' class="col-md-12" id='kraj' name='kraj' onchange="onChangeCity()" value='<?php echo $fields['kraj'] ?>' />
                     <?php if (array_key_exists('kraj', $errors)) : ?><span><?php echo $errors['kraj'] ?></span><?php endif; ?>
                 </div>
             </div>
@@ -205,19 +205,18 @@
     </form>
 </div>
 
-
-<script>
+<script id="autocomplete-script">
     $(function() {
         $("#kraj").autocomplete({
             source: <?php echo getCountryData($db) ?>
         });
     });
 
-function cityByCountry(){
+    const krajeIMiasta = <?php echo getCityData($db) ?>;
+
     $(function() {
         $("#miasto").autocomplete({
-            source: <?php echo getCityData($db, $fields['kraj']) ?>
+            source: krajeIMiasta.map(row => row.miasto)
         });
     });
-};
 </script>

@@ -12,7 +12,7 @@ $stmt = $db->query("SELECT IDWYPOZYCZENIA, W.IDAUTA, MR.NAZWAMARKI AS MARKA, MD.
 
 $row = $stmt -> fetch();
 
-if($row['datakoniec'] == null || !$row['datakoniec'])
+if($row['datakoniec'] == null || !($row['datakoniec']))
 {
     $przejechano = '-';
     $dni = (strtotime(date('Y-m-d')) - strtotime($row['datapoczatek'])) / 60 / 60 / 24;
@@ -20,7 +20,7 @@ if($row['datakoniec'] == null || !$row['datakoniec'])
 else
 {
     $przejechano = $row['przebiegkoniec'] - $row['przebiegstart'];
-    $dni = $row['datakoniec'] - $row['datapoczatek'];
+    $dni = (strtotime($row['datakoniec']) - strtotime($row['datapoczatek'])) / 60 / 60 / 24;
 }
 
 if (array_key_exists('event', $_GET)) 
