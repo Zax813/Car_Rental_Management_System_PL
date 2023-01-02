@@ -21,7 +21,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="datakoniec">Data końca:</label>
                 <div class='controls'>
-                    <input type="date" class='col-md-12' id="datakoniec" name="datakoniec" value="<?php echo $fields['datakoniec']; ?>">
+                    <input type="date" class='col-md-12' id="datakoniec" name="datakoniec" disabled>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
         <div class='form-group mb-3'>
             <label class='control-label' for="przebiegstart">Obecny przebieg:</label>
             <div class='controls'>
-                <input type="number" class="col-md-12" id="przebiegstart" name="przebiegstart" value="<?php echo (int) $fields['przebiegstart'] ?>">
+                <input type="number" class="col-md-12" id="przebiegstart" name="przebiegstart" min="<?php echo (int) $fields['przebiegstart'] ?>" value="<?php echo (int) $fields['przebiegstart'] ?>">
             </div>
             <?php if (array_key_exists('przebiegstart', $errors)) : ?><span><?php echo $errors['przebiegstart'] ?></span><?php endif; ?>
         </div>

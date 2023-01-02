@@ -63,7 +63,7 @@ function m_array_str($array, $col)
 //Funkcja sprawdzająca czy w tabeli znajduje się przynajmniej jeden pracownik z uprawnieniami administratora
 function is_admins($db)
 {
-    $stmt = $db->query("SELECT idpracownika FROM pracownicy WHERE uprawnienia='admin'");
+    $stmt = $db->query("SELECT idpracownika FROM pracownicy WHERE uprawnienia='admin' AND zatrudniony=TRUE");
     $data = $stmt->fetchAll();
 
     $count = 0;

@@ -53,7 +53,7 @@ if (isset($_SESSION['rentAdd'])) {
     $row['idauto'] = $auto['idauto'];
     $row['samochod'] = $auto['marka'].' '.$auto['model'];
     $row['numer'] = $auto['rejestracja'];
-    $row['przebiegstart'] = $auto['przebieg'];     
+    $row['przebiegauta'] = $auto['przebieg'];     
 
     // Pobierz aktualną datę w formacie YYYY-MM-DD
     $today = date("Y-m-d");
@@ -62,11 +62,11 @@ if (isset($_SESSION['rentAdd'])) {
     $nextDay = date("Y-m-d", strtotime("+1 day"));
 
     $fields['datapoczatek'] = array_key_exists('datapoczatek', $_POST) ? $_POST['datapoczatek'] : $today;
-    $fields['datakoniec'] = array_key_exists('datakoniec', $_POST) ? $_POST['datakoniec'] : $nextDay;
+    $fields['datakoniec'] = array_key_exists('datakoniec', $_POST) ? $_POST['datakoniec'] : NULL;
 
     $fields['samochod'] = array_key_exists('samochod', $_POST) ? $_POST['samochod'] : $row['samochod'];
     $fields['numer'] = array_key_exists('numer', $_POST) ? $_POST['numer'] : $row['numer'];
-    $fields['przebiegstart'] = array_key_exists('przebiegstart', $_POST) ? $_POST['przebiegstart'] : $row['przebiegstart'];
+    $fields['przebiegstart'] = array_key_exists('przebiegstart', $_POST) ? $_POST['przebiegstart'] : $row['przebiegauta'];
     
     $fields['imie'] = array_key_exists('imie', $_POST) ? validTextDB($_POST['imie']) : '';
     $fields['nazwisko'] = array_key_exists('nazwisko', $_POST) ? validTextDB($_POST['nazwisko']) : '';
@@ -88,7 +88,7 @@ if (isset($_SESSION['rentAdd'])) {
     $errors = array();
     $info = "";
 
-    if(isset($_POST["findClient"]))
+    if(isset($_POST["findClient"]) || isset($_POST["acceptAdd"]))
     {
         if (!empty($fields['telefon'])) {
             if (!validtel($fields['telefon'])) {
@@ -125,12 +125,17 @@ if (isset($_SESSION['rentAdd'])) {
                 $fields['rodzajdokumentu'] = $clientInfo['rodzajdokumentu'];
                 $fields['nrdokumentu'] = $clientInfo['nrdokumentu'];
                 $fields['telefon'] = $clientInfo['telefon'];
+                $fields['email'] = $clientInfo['email'];
                 $fields['kraj'] = $clientInfo['kraj'];
                 $fields['miasto'] = $clientInfo['miasto'];
                 $fields['ulica'] = $clientInfo['ulica'];
                 $fields['nrdomu'] = $clientInfo['nrdomu'];
                 $fields['nrmieszkania'] = $clientInfo['nrmieszkania'];
                 $fields['kodpocztowy'] = $clientInfo['kodpocztowy'];
+            }
+            else
+            {
+                $row['idklienta'] = NULL;
             }
         }
     }
@@ -158,56 +163,57 @@ if (isset($_SESSION['rentAdd'])) {
             $errors['przebiegstart'] = 'Pole jest wymagane.';
         }
         else{
-            if($fields['przebiegstart'] < $row['przebiegstart'])
+            if($fields['przebiegstart'] < $row['przebiegauta'])
             {
-                $errors['przebiegstart'] = "Podany przebieg jest mniejszy od aktualnego ( ".$row['przebiegstart']." km)";
+                $errors['przebiegstart'] = "Podany przebieg jest mniejszy od aktualnego ( ".$row['przebiegauta']." km)";
             }
-        }
-
-        if (empty($fields['imie'])) {
-            $errors['imie'] = 'Imię jest wymagane.';
-        }
-
-        if (empty($fields['nazwisko'])) {
-            $errors['nazwisko'] = 'Nazwisko jest wymagane.';
-        }
-
-        if (empty($fields['rodzajdokumentu'])) {
-            $errors['rodzajdokumentu'] = 'Rodzaj dokumentu jest wymagany.';
-        }
-
-        if (empty($fields['nrdokumentu'])) {
-            $errors['nrdokumentu'] = 'Numer dokumentu jest wymagany.';
         }
 
         if (!empty($fields['telefon'])) {
             if (!validtel($fields['telefon'])) {
                 $errors['telefon'] = 'Numer jest błędny.';
             }
-        }
-        else
-        {
+        } else {
             $errors['telefon'] = 'Telefon jest wymagany.';
         }
 
-        if (empty($fields['kraj'])) {
-            $errors['kraj'] = 'Kraj jest wymagany.';
-        }
+        if (!isset($row['idklienta']) || $row['idklienta'] == NULL) {
 
-        if (empty($fields['miasto'])) {
-            $errors['miasto'] = 'Miasto jest wymagane.';
-        }
+            if (empty($fields['imie'])) {
+                $errors['imie'] = 'Imię jest wymagane.';
+            }
 
-        if (empty($fields['ulica'])) {
-            $errors['ulica'] = 'Ulica jest wymagana.';
-        }
+            if (empty($fields['nazwisko'])) {
+                $errors['nazwisko'] = 'Nazwisko jest wymagane.';
+            }
 
-        if (empty($fields['nrdomu'])) {
-            $errors['nrdomu'] = 'Nr domu jest wymagany.';
-        }
+            if (empty($fields['rodzajdokumentu'])) {
+                $errors['rodzajdokumentu'] = 'Rodzaj dokumentu jest wymagany.';
+            }
 
-        if (empty($fields['kodpocztowy'])) {
-            $errors['kodpocztowy'] = 'Kod pocztowy jest wymagany.';
+            if (empty($fields['nrdokumentu'])) {
+                $errors['nrdokumentu'] = 'Numer dokumentu jest wymagany.';
+            }
+
+            if (empty($fields['kraj'])) {
+                $errors['kraj'] = 'Kraj jest wymagany.';
+            }
+
+            if (empty($fields['miasto'])) {
+                $errors['miasto'] = 'Miasto jest wymagane.';
+            }
+
+            if (empty($fields['ulica'])) {
+                $errors['ulica'] = 'Ulica jest wymagana.';
+            }
+
+            if (empty($fields['nrdomu'])) {
+                $errors['nrdomu'] = 'Nr domu jest wymagany.';
+            }
+
+            if (empty($fields['kodpocztowy'])) {
+                $errors['kodpocztowy'] = 'Kod pocztowy jest wymagany.';
+            }
         }
 
         if (empty($fields['uwagi'])) {
@@ -223,7 +229,7 @@ if (isset($_SESSION['rentAdd'])) {
                 $db->beginTransaction();
 
                 //Jeśli klienta nie ma w bazie wykonujemy procedurę jego dodania
-                if(!isset($row['idklienta']))
+                if(!isset($row['idklienta']) || $row['idklienta'] == NULL)
                 {
                     //Sprawdzamy czy kraj klienta występuje w tabeli kraj
                     $pstmt = $db->prepare("SELECT IDKRAJ FROM KRAJ WHERE NAZWAKRAJ=:kraj;");
@@ -280,6 +286,8 @@ if (isset($_SESSION['rentAdd'])) {
                     $row['idklienta'] = $db->lastInsertId();
                 }
 
+                $uwagi = "Wydanie: ".$fields['uwagi'];
+
                 //Dodanie wypożyczenia do bazy
                 $stmt = $db->prepare("INSERT INTO public.wypozyczenia(
                     idauta, idklienta, idpracownika, datapoczatek, datakoniec, przebiegstart, zaplacono, uwagi)
@@ -291,10 +299,32 @@ if (isset($_SESSION['rentAdd'])) {
                 $stmt->bindValue(':datapoczatek', $fields['datapoczatek']);
                 $stmt->bindValue(':datakoniec', $fields['datakoniec']);
                 $stmt->bindValue(':przebiegstart', $fields['przebiegstart'], PDO::PARAM_INT);
-                $stmt->bindValue(':uwagi', $fields['uwagi']);
+                $stmt->bindValue(':uwagi', $uwagi);
                 
-
                 $stmt->execute();
+
+                //Jeśli podany przebieg w formularzu jest inny niż w bazie to aktualizuj
+                if($fields['przebiegstart'] != $row['przebiegauta'])
+                {
+                    $carstmt = $db->prepare("UPDATE auta
+                                            SET przebieg = :nowyprzebieg
+                                            WHERE idauto = :idauta;");
+                    
+                    $carstmt->bindValue(':nowyprzebieg', $fields['przebiegstart'], PDO::PARAM_INT);
+                    $carstmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
+                    $carstmt->execute();
+                }
+
+                //Jeśli data wypożyczenia jest dzisiejsza to aktualizuj dostępność
+                if($fields['datapoczatek'] == $today)
+                {
+                    $carstmt = $db->prepare("UPDATE auta
+                                            SET dostepny = FALSE
+                                            WHERE idauto = :idauta;");
+                    
+                    $carstmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
+                    $carstmt->execute();
+                }
 
                 $db->commit();
 

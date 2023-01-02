@@ -12,6 +12,7 @@ $result = $stmt->fetchAll();
 
 
 if ((array_key_exists('event', $_GET))) {
+
     if ($_GET['event'] == "edit") {
         $_SESSION['rentEdit'] = $_GET['value'];
         redirect(url('rentEdit'));
@@ -21,4 +22,15 @@ if ((array_key_exists('event', $_GET))) {
         $_SESSION['rentDetails'] = $_GET['value'];
         redirect(url('rentDetails'));
     }
+
+    if ($_GET['event'] == "final") {
+        $_SESSION['rentFinal'] = $_GET['value'];
+        redirect(url('rentFinal'));
+    }
+
+    if ($_GET['event'] == "cancel") {
+        $_SESSION['rentCancel'] = $_GET['value'];
+        redirect(url('rentCancel'));
+    }
+
 }
