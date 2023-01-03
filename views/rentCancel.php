@@ -6,11 +6,11 @@
 
 <div class='form-outline mx-5 d-flex justify-content-center'>
 
-    <!-- Pole wpisywania uwag -->
+    <!-- Pole wypisywania uwag -->
     <div class='form-group mb-2'>
         <label class='control-label' for="uwagi">Uwagi do wypożyczenia:</label>
         <div class='controls'>
-            <textarea class="col-md-12" id="uwagi" name="uwagi" rows="20" cols="23" disabled><?php echo $errors['cancel'];?></textarea>
+            <textarea class="col-md-12" id="uwagi" name="uwagi" rows="20" cols="40" disabled><?php echo $errors['cancel'];?></textarea>
         </div>
     </div>
 

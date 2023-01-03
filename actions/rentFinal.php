@@ -11,56 +11,6 @@ if((array_key_exists('event', $_GET)))
 // Pobierz aktualną datę w formacie YYYY-MM-DD
 $today = date("Y-m-d");
 
-if(isset($_SESSION['rentCancel']))
-{
-    try{
-        $db->beginTransaction();
-
-        $pstmt = $db ->query("SELECT IDWYPOZYCZENIA, IDAUTA, DATAPOCZATEK, DATAKONIEC, PRZEBIEGSTART, PRZEBIEGKONIEC, SUMA, ZAPLACONO, UWAGI
-                                FROM WYPOZYCZENIA WHERE IDWYPOZYCZENIA=:idwypo;");
-
-        $pstmt->bindValue(':idwypo', $_SESSION['rentCancel'], PDO::PARAM_INT);
-        $pstmt->execute();
-
-        $row = $pstmt -> fetch();
-
-        $uwagi = "ANULOWANO\n".$row['uwagi'];
-
-        $stmt = $db->prepare("UPDATE wypozyczenia
-                                SET datakoniec=:datakoniec, przebiegkoniec=:przebiegkoniec, suma=:suma, zaplacono=TRUE, uwagi=:uwagi
-                                WHERE idwypozyczenia=:idwypo;");
-
-        $stmt->bindValue(':idwypo', $_SESSION['rentCancel'], PDO::PARAM_INT);
-        $stmt->bindValue(':datakoniec', $row['datapoczatek']);
-        $stmt->bindValue(':przebiegkoniec', $row['przebiegstart']);
-        $stmt->bindValue(':suma', "0");
-        $stmt->bindValue(':uwagi', $uwagi);
-        $stmt->execute();
-
-        $stmt = $db->prepare("UPDATE AUTA
-                                SET dostepny=TRUE
-                                WHERE idauto={$row['idauta']};");
-        $stmt->execute();
-
-        $db->commit();
-
-    }
-    catch (PDOException $e) {
-        $db->rollBack();
-        $errors['cancel'] = "Błąd: " . $e->getMessage();
-        console_log($errors['cancel']);
-        unset($_SESSION['rentCancel']);
-        redirect(url("rentList"));
-    }
-
-    if (count($errors) == 0) {
-
-        $newid = $_SESSION['rentCancel'];
-        console_log("Dane zaktualizowane pomyślnie");
-        unset($_SESSION['rentCancel']);
-        redirect(url("rentList&value={$newid}&event=details"));
-    }
-}
 
 if (isset($_SESSION['rentFinal'])) {
 

@@ -10,6 +10,7 @@ $result = $stmt->fetchAll();
 
 
 if ((array_key_exists('event', $_GET))) {
+    
     if ($_GET['event'] == "edit") {
         $_SESSION['clientEdit'] = $_GET['value'];
         redirect(url('clientEdit'));

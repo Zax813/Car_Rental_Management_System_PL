@@ -103,6 +103,14 @@ if (isset($_POST["acceptAdd"])) {
                 $ustmt->bindValue(':uwagi', $_POST['uwagi']);
                 $ustmt->bindValue(':koszt', $_POST['koszt']);
                 $ustmt->execute();
+
+                if($_POST['datapoczatek'] == $today)
+                {
+                    $stmt = $db->prepare("UPDATE AUTA SET dostepny=FALSE, sprawny=FALSE
+                                            WHERE IDAUTO=:idauto");
+                    $stmt->bindValue(':idauto', $idauta, PDO::PARAM_INT);
+                    $stmt->execute();
+                }
             }
 
             $db->commit();
