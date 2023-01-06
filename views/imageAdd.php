@@ -1,7 +1,7 @@
-<h2 class='form-outline mx-5 my-2'>Dodaj Serwis</h2>
+<h2 class='form-outline mx-5 my-2'>Dodaj zdjęcie</h2>
 
 <div class='form-outline mx-5 my-3'>
-    <a class='btn btn-info btn-sm' href='index.php?action=home' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
+    <a class='btn btn-info btn-sm' href='index.php?action=carAdd' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
 </div>
 
 <!-- Formularz wpisywania nowego serwisu -->

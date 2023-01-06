@@ -7,6 +7,7 @@ $fields['fmarka'] = array_key_exists('fmarka', $_POST) ? $_POST['fmarka'] : '';
 $fields['sortuj'] = array_key_exists('sortuj', $_POST) ? $_POST['sortuj'] : 'KOD';
 $errors = array();
 */
+unset($_SESSION['carAddStorage']);
 
 if (array_key_exists('event', $_GET)) 
 {
@@ -27,6 +28,12 @@ if (array_key_exists('event', $_GET))
         {
             redirect(url('home'));
         }
+    }
+
+    if ($_GET['event'] == "carAdd") 
+    {
+        $_SESSION['carAdd'] = true;
+        redirect(url('carAdd'));
     }
 
     if ($_GET['event'] == "edit") 

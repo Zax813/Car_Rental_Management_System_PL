@@ -27,6 +27,8 @@ require_once(_ROOT_PATH.DIRECTORY_SEPARATOR.'functions.php');
 
 //Spis dostępnych podstron
 $actions = array('home',
+                'carAdd',
+                'carDetails',
                 'carInspectionAdd',
                 'carInspectionList',
                 'carServiceDetails',

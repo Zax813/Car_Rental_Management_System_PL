@@ -29,7 +29,7 @@
                 <?php if (array_key_exists('telefon', $errors)) : ?><span><?php echo $errors['telefon'] ?></span><?php endif; ?>
                 <?php if (array_key_exists('email', $errors)) : ?><span><?php echo $errors['email'] ?></span><?php endif; ?>
             </div>
-
+        </div>
 
 
             <!-- Pole wpisywania nazwy serwisu -->
@@ -61,10 +61,9 @@
 
             <!-- Pole wybrania i wpisania numeru dokumentu -->
             <div class='row mb-2'>
-                <label class='control-label' for='rodzajdokumentu'>Dokument</label>
+                <label class='control-label'  for='rodzajdokumentu'>Dokument</label>
                 <div class='col-md-4 mb-2'>
-
-                    <select class="col-md-12" name="rodzajdokumentu" <?php echo $fields['disabled'] ?>>
+                    <select class="form-select col-md-12" name="rodzajdokumentu" <?php echo $fields['disabled'] ?>>
                         <option value="dowód osobisty" <?php if ($fields['rodzajdokumentu'] == 'dowód osobisty') {
                                                             echo " selected";
                                                         } ?>>dowód osobisty</option>
@@ -78,15 +77,15 @@
                                                     echo " selected";
                                                 } ?>>inny</option>
                     </select>
-                    <?php if (array_key_exists('rodzajdokumentu', $errors)) : ?><span><?php echo $errors['rodzajdokumentu'] ?></span><?php endif; ?>
                 </div>
 
                 <div class='col-md-8 mb-2'>
                     <div class='controls'>
-                        <input class="col-md-12" id='nrdokumentu' type='text' name='nrdokumentu' placeholder='Numer dokumentu' value='<?php echo $fields['nrdokumentu'] ?>' <?php echo $fields['disabled'] ?> />
-                        <?php if (array_key_exists('nrdokumentu', $errors)) : ?><span><?php echo $errors['nrdokumentu'] ?></span><?php endif; ?>
+                        <input class="col-md-12" id='nrdokumentu' type='text' name='nrdokumentu' placeholder='Numer dokumentu' value='<?php echo $fields['nrdokumentu'] ?>' <?php echo $fields['disabled'] ?> />   
                     </div>
                 </div>
+                <?php if (array_key_exists('rodzajdokumentu', $errors)) : ?><span><?php echo $errors['rodzajdokumentu'] ?></span><?php endif; ?>
+                <?php if (array_key_exists('nrdokumentu', $errors)) : ?><span><?php echo $errors['nrdokumentu'] ?></span><?php endif; ?>
             </div>
 
             <!-- Pole wybrania i wpisania numeru dokumentu -->

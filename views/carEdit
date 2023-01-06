@@ -38,7 +38,7 @@
         <div class="row mb-2">
             <!-- Pole wpisywania marki -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="marka">Marka:</label>
+                <label class='control-label' for="marka" disabled>Marka:</label>
                 <div class='controls'>
                     <input type="text" class='col-md-12' id="marka" name="marka" value="<?php echo $fields['marka']; ?>">
                 </div>
@@ -46,7 +46,7 @@
 
             <!-- Pole wpisywania modelu -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="model">Model:</label>
+                <label class='control-label' for="model" disabled>Model:</label>
                 <div class='controls'>
                     <input type="text" class='col-md-12' id="model" name="model" value="<?php echo $fields['model']; ?>">
                 </div>
@@ -58,7 +58,7 @@
         <div class="row mb-2">
             <!-- Pole wpisywania numeru vin -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="vin">VIN:</label>
+                <label class='control-label' for="vin" disabled>VIN:</label>
                 <div class='controls'>
                     <input type="text" class="col-md-12" id="vin" name="vin" value="<?php echo $fields['vin'] ?>">
                 </div>
@@ -66,7 +66,7 @@
 
             <!-- Pole wpisywania numeru rejestracyjnego -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="numer">Numer rejestracyjny:</label>
+                <label class='control-label' for="numer" disabled>Numer rejestracyjny:</label>
                 <div class='controls'>
                     <input type="text" class="col-md-12" id="numer" name="numer" value="<?php echo $fields['numer'] ?>">
                 </div>
@@ -78,7 +78,7 @@
         <div class="row mb-2">
             <!-- Pole wpisywania rocznika -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="rok">Rok produkcji:</label>
+                <label class='control-label' for="rok" disabled>Rok produkcji:</label>
                 <div class='controls'>
                     <input type="number" class="col-md-12" id="rok" name="rok" min='1900' value="<?php echo $fields['rok'] ?>">
                 </div>
@@ -94,90 +94,6 @@
 
             <?php if (array_key_exists('przebieg', $errors)) : ?><span><?php echo $errors['przebieg'] ?></span><?php endif; ?>
             <?php if (array_key_exists('rok', $errors)) : ?><span><?php echo $errors['rok'] ?></span><?php endif; ?>
-        </div>
-
-
-        <div class="row mb-2">
-            <!-- Pole wyboru segmentu -->
-            <div class='col-md-6 mb-2'>
-                <label class='control-label' for="segment">Segment:</label>
-                <div class='controls'>
-                    <select class="form-select col-md-12" id="segment" name="segment">
-                        <option value="">--Wybierz--</option>
-                        <?php
-                        foreach ($segmenty as $row) {
-                            echo "<option value={$row['idsegment']}";
-                            if ($fields['segment'] == $row['idsegment']) {
-                                echo " selected";
-                            }
-                            echo ">{$row['nazwasegment']}</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Pole wyboru paliwa -->
-            <div class='col-md-6 mb-2'>
-                <label class='control-label' for="paliwo">Paliwo:</label>
-                <div class='controls'>
-                    <select class="form-select col-md-12" id="paliwo" name="paliwo">
-                        <option value="">--Wybierz--</option>
-                        <?php
-                        foreach ($paliwa as $row) {
-                            echo "<option value={$row['idpaliwo']}";
-                            if ($fields['paliwo'] == $row['idpaliwo']) {
-                                echo " selected";
-                            }
-                            echo ">{$row['nazwapaliwo']}</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </div>
-            <?php if (array_key_exists('segment', $errors)) : ?><span><?php echo $errors['segment'] ?></span><?php endif; ?>
-            <?php if (array_key_exists('paliwo', $errors)) : ?><span><?php echo $errors['paliwo'] ?></span><?php endif; ?>
-        </div>
-
-        <div class="row mb-2">
-            <!-- Pole wyboru skrzyni biegów -->
-            <div class='col-md-4 mb-2'>
-                <label class='control-label' for="skrzynia">Skrzynia biegów:</label>
-                <div class='controls'>
-                    <select class="form-select col-md-12" id="skrzynia" name="skrzynia">
-                        <option value="">--Wybierz--</option>
-                        <option value="automatyczna" <?php if ($fields['skrzynia'] == 'automatyczna') {
-                                                            echo " selected";
-                                                        } ?>>automatyczna</option>
-                        <option value="półautomatyczna" <?php if ($fields['skrzynia'] == 'półautomatyczna') {
-                                                            echo " selected";
-                                                        } ?>>półautomatyczna</option>
-                        <option value="manualna" <?php if ($fields['skrzynia'] == 'manualna') {
-                                                        echo " selected";
-                                                    } ?>>manualna</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Pole wpisywania mocy silnika -->
-            <div class='col-md-4 mb-2'>
-                <label class='control-label' for="mockw">Moc silnika (kW):</label>
-                <div class='controls'>
-                    <input type="number" class="col-md-12" id="mockw" name="mockw" min='0' value="<?php echo $fields['mockw'] ?>">
-                </div>
-            </div>
-
-            <!-- Pole wpisywania liczby miejsc -->
-            <div class='col-md-4 mb-2'>
-                <label class='control-label' for="liczbamiejsc">Liczba miejsc:</label>
-                <div class='controls'>
-                    <input type="number" class="col-md-12" id="liczbamiejsc" name="liczbamiejsc" min='1' max='9' value="<?php echo $fields['liczbamiejsc'] ?>">
-                </div>
-            </div>
-
-            <?php if (array_key_exists('skrzynia', $errors)) : ?><span><?php echo $errors['skrzynia'] ?></span><?php endif; ?>
-            <?php if (array_key_exists('mockw', $errors)) : ?><span><?php echo $errors['mockw'] ?></span><?php endif; ?>
-            <?php if (array_key_exists('liczbamiejsc', $errors)) : ?><span><?php echo $errors['liczbamiejsc'] ?></span><?php endif; ?>
         </div>
 
         <div class="row mb-2">

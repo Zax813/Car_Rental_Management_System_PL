@@ -5,7 +5,7 @@
 <div class='form-outline mx-5 my-3'>
     <?php
     if ($_SESSION['perm'] == "admin") {
-        echo "<a href='index.php?action=addEquip'' class='btn btn-info' name='addEquip'>Dodaj samochód</a>";
+        echo "<a href='index.php?action=home&event=carAdd' class='btn btn-info' name='carAdd'>Dodaj samochód</a>";
     }
     ?>
 </div>
@@ -54,6 +54,9 @@
                             <a class='btn btn-success btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=add' title='Wypożycz' name='rentAdd'><i class='bi bi-calendar-plus'></i></a>";
                         else
                             echo "<p class='card-text mt-1'><small style='color: red;'>Nie dostępny</small></p>";
+                        
+                        if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
+                            echo "<a class='btn btn-info btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=details' title='Szczegóły' name='details'><i class='bi bi-info-circle'></i></a>";
                         ?>
                     </div>
                 </div>
