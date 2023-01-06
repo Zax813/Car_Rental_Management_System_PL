@@ -1,12 +1,12 @@
 <h2 class='form-outline mx-5 my-2'>Dodawanie samochodu</h2>
 
 <div class='form-outline mx-5 my-3'>
-    <a class='btn btn-info btn-sm' href='index.php?action=carAdd&event=list' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
+    <a class='btn btn-info btn-sm' href='index.php?action=carEdit&event=list' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
 </div>
 
 <!-- Formularz wpisywania nowego serwisu -->
 <div class='form-outline mx-5 d-flex justify-content-center'>
-    <form class='form-horizontal' action="index.php?action=carAdd" id="carAddForm" method="post">
+    <form class='form-horizontal' action="index.php?action=carEdit" id="carEditForm" method="post">
 
         <div class="row mb-2">
             <!-- Pole wyboru zdjęcia samochodu -->
@@ -38,17 +38,17 @@
         <div class="row mb-2">
             <!-- Pole wpisywania marki -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="marka" disabled>Marka:</label>
+                <label class='control-label' for="marka" >Marka:</label>
                 <div class='controls'>
-                    <input type="text" class='col-md-12' id="marka" name="marka" value="<?php echo $fields['marka']; ?>">
+                    <input type="text" class='col-md-12' id="marka" name="marka" value="<?php echo $fields['marka']; ?>" disabled>
                 </div>
             </div>
 
             <!-- Pole wpisywania modelu -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="model" disabled>Model:</label>
+                <label class='control-label' for="model">Model:</label>
                 <div class='controls'>
-                    <input type="text" class='col-md-12' id="model" name="model" value="<?php echo $fields['model']; ?>">
+                    <input type="text" class='col-md-12' id="model" name="model" value="<?php echo $fields['model']; ?>" disabled>
                 </div>
             </div>
             <?php if (array_key_exists('marka', $errors)) : ?><span><?php echo $errors['marka'] ?></span><?php endif; ?>
@@ -60,7 +60,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="vin" disabled>VIN:</label>
                 <div class='controls'>
-                    <input type="text" class="col-md-12" id="vin" name="vin" value="<?php echo $fields['vin'] ?>">
+                    <input type="text" class="col-md-12" id="vin" name="vin" value="<?php echo $fields['vin'] ?>" disabled>
                 </div>
             </div>
 
@@ -78,9 +78,9 @@
         <div class="row mb-2">
             <!-- Pole wpisywania rocznika -->
             <div class='col-md-6 mb-2'>
-                <label class='control-label' for="rok" disabled>Rok produkcji:</label>
+                <label class='control-label' for="rok">Rok produkcji:</label>
                 <div class='controls'>
-                    <input type="number" class="col-md-12" id="rok" name="rok" min='1900' value="<?php echo $fields['rok'] ?>">
+                    <input type="number" class="col-md-12" id="rok" name="rok" min='1900' value="<?php echo $fields['rok'] ?>" disabled>
                 </div>
             </div>
 
@@ -116,6 +116,29 @@
             <?php if (array_key_exists('cenakm', $errors)) : ?><span><?php echo $errors['cenakm'] ?></span><?php endif; ?>
         </div>
 
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="dostepny" id="dostepny" value='true' <?php if($fields['dostepny']=='true'){ echo " checked";} ?>/>
+            <label class="form-check-label" for="flexCheckDefault">
+                Dostępny
+            </label>
+        </div>
+
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="sprawny" id="sprawny" value='true' <?php if($fields['sprawny']=='true'){ echo " checked";} ?>/>
+            <label class="form-check-label" for="flexCheckChecked">
+                Sprawny
+            </label>
+        </div>
+
+        <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="aktywny" id="aktywny" value='true' <?php if($fields['aktywny']=='true'){ echo " checked";} ?>/>
+            <label class="form-check-label" for="flexCheckChecked">
+                Aktywny
+            </label>
+        </div>
+
+
         <!-- Pole wpisywania uwag -->
         <div class='form-group mb-2'>
             <label class='control-label' for="uwagi">Uwagi do samochodu:</label>
@@ -138,19 +161,3 @@
 
     </form>
 </div>
-
-<script id="autocomplete-script">
-    $(function() {
-        $("#marka").autocomplete({
-            source: <?php echo getBrandData($db) ?>
-        });
-    });
-
-    const markaIModele = <?php echo getModelData($db) ?>;
-
-    $(function() {
-        $("#model").autocomplete({
-            source: markaIModele.map(row => row.model)
-        });
-    });
-</script>

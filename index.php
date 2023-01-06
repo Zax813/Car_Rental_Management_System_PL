@@ -29,6 +29,7 @@ require_once(_ROOT_PATH.DIRECTORY_SEPARATOR.'functions.php');
 $actions = array('home',
                 'carAdd',
                 'carDetails',
+                'carEdit',
                 'carInspectionAdd',
                 'carInspectionList',
                 'carServiceDetails',
