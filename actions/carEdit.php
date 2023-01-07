@@ -59,39 +59,34 @@ if (isset($_SESSION['carEdit'])) {
     if(isset($_POST["acceptAdd"]))
     {
 
+        if (isset($_POST['aktywny'])) {
+            $fields['aktywny'] = 'true';
+
+            if (isset($_POST['sprawny'])) {
+                $fields['sprawny'] = 'true';
+
+                if (isset($_POST['dostepny'])) {
+                    $fields['dostepny'] = 'true';
+                } else {
+                    $fields['dostepny'] = 'false';
+                }
+            } else {
+                $fields['sprawny'] = 'false';
+                $fields['dostepny'] = 'false';
+            }
+        } else {
+            $fields['aktywny'] = 'false';
+            $fields['sprawny'] = 'false';
+            $fields['dostepny'] = 'false';
+        }
+
         if(empty($fields['numer']))
         {
             $errors['numer'] = 'Pole numer rejestracyjny nie może być puste';
         }
-
-        if(empty($fields['segment']))
+        else
         {
-            $errors['segment'] = 'Pole segment nie może być puste';
-        }
-
-        if(empty($fields['paliwo']))
-        {
-            $errors['paliwo'] = 'Pole paliwo nie może być puste';
-        }
-
-        if(empty($fields['mockw']))
-        {
-            $errors['mockw'] = 'Pole moc/kw nie może być puste';
-        }
-
-        if(empty($fields['skrzynia']))
-        {
-            $errors['skrzynia'] = 'Pole skrzynia biegów nie może być puste';
-        }
-
-        if(empty($fields['liczbamiejsc']))
-        {
-            $errors['liczbamiejsc'] = 'Pole liczba miejsc nie może być puste';
-        }
-
-        if(empty($fields['rok']))
-        {
-            $errors['rok'] = 'Pole rok produkcji nie może być puste';
+            $fields['numer'] = strtoupper($fields['numer']);
         }
 
         if(empty($fields['przebieg']))
@@ -120,65 +115,49 @@ if (isset($_SESSION['carEdit'])) {
             $fields['zdjecie'] = null;
         }
 
+        
+
         if(count($errors) == 0)
         {
             try{
                 $db -> beginTransaction();
 
-                $stmt = $db->prepare('UPDATE AUTA 
+                console_log('begin transaction');
+
+                $ustmt = $db->prepare('UPDATE AUTA 
                                         SET REJESTRACJA=:numer, PRZEBIEG = :przebieg, CENAKM = :cenakm, CENADOBA = :cenadoba, DOSTEPNY = :dostepny, SPRAWNY = :sprawny, AKTYWNY = :aktywny, UWAGI = :uwagi, IDZDJECIE = :zdjecie
                                         WHERE IDAUTO = :idauto');
                 
-                $stmt -> bindValue(':numer', strtoupper($fields['numer']));
-                $stmt -> bindValue(':przebieg', $fields['przebieg'], PDO::PARAM_INT);
-                $stmt -> bindValue(':cenakm', $fields['cenakm']);
-                $stmt -> bindValue(':cenadoba', $fields['cenadoba']);
-                $stmt -> bindValue(':uwagi', $fields['uwagi'], PDO::PARAM_STR);
-                $stmt -> bindValue(':zdjecie', $fields['zdjecie'], PDO::PARAM_INT);
+                $ustmt -> bindValue(':numer', $fields['numer']);
+                $ustmt -> bindValue(':przebieg', $fields['przebieg'], PDO::PARAM_INT);
+                $ustmt -> bindValue(':cenakm', $fields['cenakm']);
+                $ustmt -> bindValue(':cenadoba', $fields['cenadoba']);
+                $ustmt -> bindValue(':uwagi', $fields['uwagi']);
+                $ustmt -> bindValue(':zdjecie', $fields['zdjecie'], PDO::PARAM_INT);
+                $ustmt -> bindValue(':idauto', $_SESSION['carEdit'], PDO::PARAM_INT);
 
-                if($fields['aktywny'] == 'true')
-                {
-                    $stmt -> bindValue(':aktywny', 1, PDO::PARAM_INT);
+                $ustmt -> bindValue(':dostepny', $fields['dostepny'], PDO::PARAM_BOOL);
+                $ustmt -> bindValue(':sprawny', $fields['sprawny'], PDO::PARAM_BOOL);
+                $ustmt -> bindValue(':aktywny', $fields['aktywny'], PDO::PARAM_BOOL);
 
-                    if($fields['sprawny'] == 'true')
-                    {
-                        $stmt -> bindValue(':sprawny', 1, PDO::PARAM_INT);
-
-                        if ($fields['dostepny'] == 'true') 
-                        {
-                            $stmt->bindValue(':dostepny', 1, PDO::PARAM_INT);
-                        } else 
-                        {
-                            $stmt->bindValue(':dostepny', 0, PDO::PARAM_INT);
-                        }
-                    }
-                    else
-                    {
-                        $stmt -> bindValue(':dostepny', 0, PDO::PARAM_INT);
-                        $stmt -> bindValue(':sprawny', 0, PDO::PARAM_INT);
-                    }
-                }
-                else
-                {
-                    $stmt -> bindValue(':aktywny', 0, PDO::PARAM_INT);
-                    $stmt -> bindValue(':dostepny', 0, PDO::PARAM_INT);
-                    $stmt -> bindValue(':sprawny', 0, PDO::PARAM_INT);
-                }
-
-                $stmt -> execute();
+                $ustmt -> execute();
+                console_log('execute');
 
                 $db->commit();
+                console_log('commit');
             }
             catch(PDOException $e)
             {
-                $db->rollBack();
+                console_log('rollback');
                 $errors['all'] = 'Błąd: ' . $e->getMessage();
+                console_log($errors['all']);
+                $db->rollBack();
             }
 
             if (count($errors) == 0) 
             {
-
-                $newid = $db->lastInsertId();
+                $info = 'Dane zostały zaktualizowane';
+                $newid = $_SESSION['carEdit'];
                 console_log("Dane dodane pomyślnie");
                 unset($_SESSION['carEdit']);
                 redirect(url("home&value={$newid}&event=details"));
@@ -189,3 +168,5 @@ if (isset($_SESSION['carEdit'])) {
     }
 
 }
+
+?>

@@ -150,7 +150,7 @@
         <!-- Przycisk zatwierdzający -->
         <div class='form-group my-4'>
             <label class='control-label'></label>
-            <input type='submit' class='btn btn-info col-md-12' value='Zatwierdź' name='acceptAdd' />
+            <input type='submit' class='btn btn-info col-md-12' value='Zatwierdź' id='acceptAdd' name='acceptAdd' />
         </div>
 
         <!-- Komunikaty o błędach -->

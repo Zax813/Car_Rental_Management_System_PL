@@ -44,7 +44,42 @@
             <tr>
                 <td>Cena za km
                 <td>{$row['cenakm']} zł
-            <tr>";
+            <tr>
+                <td>Aktywny";
+
+                if($row['aktywny'] == false)
+                {
+                    echo "<td style='color: red'>Nie<td>";
+                }
+                else
+                {
+                    echo "<td style='color: green'>Tak<td>";
+                }
+
+            echo "<tr>
+                <td>Sprawny";
+            
+                if($row['sprawny'] == false)
+                {
+                    echo "<td style='color: red'>Nie<td>";
+                }
+                else
+                {
+                    echo "<td style='color: green'>Tak<td>";
+                }
+            echo "<tr>
+                <td>Dostępny";
+                
+                if($row['dostepny'] == false)
+                {
+                    echo "<td style='color: red'>Nie<td>";
+                }
+                else
+                {
+                    echo "<td style='color: green'>Tak<td>";
+                }
+
+            echo "<tr>";
 
         ?>
     </table>

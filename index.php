@@ -103,13 +103,13 @@ else
 
 //Kolejność wykonywania działań przy odświeżeniu strony
 //Wykonanie logiki podstrony
-include(_ROOT_PATH.DIRECTORY_SEPARATOR. 'actions'.DIRECTORY_SEPARATOR.$action.'.php');
+include(_ROOT_PATH.DIRECTORY_SEPARATOR.'actions'.DIRECTORY_SEPARATOR.$action.'.php');
 
 //Załadowanie widoku górnego paska
 //include(_ROOT_PATH.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'top.php');
 
 //Załadowanie widoku podstrony
-include(_ROOT_PATH.DIRECTORY_SEPARATOR. 'views'.DIRECTORY_SEPARATOR.$action.'.php');
+include(_ROOT_PATH.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.$action.'.php');
 
 //Załadowanie widoku stopki
 include(_ROOT_PATH.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'bottom.php');
