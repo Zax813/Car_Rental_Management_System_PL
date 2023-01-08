@@ -3,6 +3,13 @@
 <h2 class='form-outline mx-5 my-2'>Szczegóły Samochodu</h2>
 
 <div class='form-outline mx-5 my-2'>
+
+    <div class="row mb-2">
+        <fieldset>
+            <div id="calendar" style="margin: 10px;"></div>
+        </fieldset>
+    </div>
+
     <table class="table">
         <?php
         echo "<tr>
@@ -86,13 +93,17 @@
 
 
     <!-- Pole  uwag -->
-    <div class='form-group mb-2'>
-        <label class='control-label' for="uwagi">Uwagi do wypożyczenia:</label>
+    <div class='form-group my-2'>
+        <label class='control-label' for="uwagi">Uwagi do samochodu:</label>
         <div class='controls'>
             <textarea class="col-md-12" id="uwagi" name="uwagi" rows="5" cols="40" disabled><?php echo $row['uwagi']; ?></textarea>
         </div>
     </div>
+
+
 </div>
+
+
 
 <div class='form-outline mx-5 my-2'>
     <?php
@@ -102,3 +113,19 @@
     }
     ?>
 </div>
+
+<script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'pl',
+            initialView: 'dayGridMonth',
+            firstDay: 1,
+            events: <?= json_encode($calendarEvents) ?>,
+            height: 600,
+        });
+        calendar.render();
+      });
+
+</script>

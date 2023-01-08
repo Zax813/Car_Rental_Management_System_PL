@@ -11,6 +11,7 @@
 <script src="./js/jquery-3.6.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script src="js/fullcalendar.index.global.min.js"></script>
 
 </head>
 <header>
