@@ -1,16 +1,12 @@
 <?php
-/*
-$fields['limit'] = array_key_exists('limit', $_POST) ? $_POST['limit'] : '50';
-$fields['typ'] = array_key_exists('typ', $_POST) ? $_POST['typ'] : '';
-$fields['rodzaj'] = array_key_exists('rodzaj', $_POST) ? $_POST['rodzaj'] : '';
-$fields['fmarka'] = array_key_exists('fmarka', $_POST) ? $_POST['fmarka'] : '';
-$fields['sortuj'] = array_key_exists('sortuj', $_POST) ? $_POST['sortuj'] : 'KOD';
-$errors = array();
-*/
+
 unset($_SESSION['carAddStorage']);
 
 if(isset($_SESSION['user']))
 {
+    
+    $items_per_page = 2; //Limit samochodów na stronę
+
     if (array_key_exists('event', $_GET)) 
     {
         if ($_GET['event'] == "add") 
@@ -51,6 +47,26 @@ if(isset($_SESSION['user']))
         }
     }
 
+    if (array_key_exists('page', $_GET)) 
+    {
+        if (isset($_GET['page']) && is_numeric($_GET['page'])) 
+        {
+            $current_page = (int)$_GET['page'];
+        } else 
+        {
+            $current_page = 1;
+        }
+    }
+    else
+    {
+        $current_page = 1;
+    }
+
+    $limit = $items_per_page;
+    $offset = ($current_page - 1) * $items_per_page;
+
+    
+
     $fields['sortuj'] = array_key_exists('sortuj', $_POST) ? $_POST['sortuj'] : '';
     $fields['segment'] = array_key_exists('segment', $_POST) ? $_POST['segment'] : '';
     $fields['skrzynia'] = array_key_exists('skrzynia', $_POST) ? $_POST['skrzynia'] : '';
@@ -58,102 +74,112 @@ if(isset($_SESSION['user']))
     $fields['miejscaMin'] = array_key_exists('miejscaMin', $_POST) ? $_POST['miejscaMin'] : '';
     $fields['miejscaMax'] = array_key_exists('miejscaMax', $_POST) ? $_POST['miejscaMax'] : '';
 
-    $dbwhere = 'A.AKTYWNY = true';
+    $dbwhere = 'A.AKTYWNY IS TRUE';
     $dborderby = '';
 
     $stmt = $db->query('SELECT * FROM SEGMENT ORDER BY IDSEGMENT;');
     $segmenty = $stmt->fetchAll();
 
     $stmt = $db->query('SELECT * FROM PALIWO ORDER BY IDPALIWO;');
-    $paliwa = $db->query('SELECT * FROM MODEL;');
+    $paliwa = $stmt->fetchAll();
+
+    if (isset($fields['sortuj'])) {
+        switch ($fields['sortuj']) {
+            case "MARKAUP":
+                $dborderby = "A.DOSTEPNY DESC, MR.NAZWAMARKI ASC";
+                break;
+
+            case "MARKADOWN":
+                $dborderby = "A.DOSTEPNY DESC, MR.NAZWAMARKI DESC";
+                break;
+
+            case "MOCUP":
+                $dborderby = "A.DOSTEPNY DESC, MOCKW ASC";
+                break;
+
+            case "MOCDOWN":
+                $dborderby = "A.DOSTEPNY DESC, MOCKW DESC";
+                break;
+
+            case "CENADOBAUP":
+                $dborderby = "A.DOSTEPNY DESC, CENADOBA ASC, CENAKM ASC";
+                break;
+
+            case "CENADOBADOWN":
+                $dborderby = "A.DOSTEPNY DESC, CENADOBA DESC, CENAKM DESC";
+                break;
+
+            case "CENAKMUP":
+                $dborderby = "A.DOSTEPNY DESC, CENAKM ASC, CENADOBA ASC";
+                break;
+
+            case "CENAKMDOWN":
+                $dborderby = "A.DOSTEPNY DESC, CENAKM DESC, CENADOBA DESC;";
+                break;
+
+            default:
+                $dborderby = "A.DOSTEPNY DESC, S.NAZWASEGMENT ASC, MR.NAZWAMARKI, MD.NAZWAMODEL";
+                break;
+        }
+    } else {
+        $dborderby = "A.DOSTEPNY DESC, S.NAZWASEGMENT ASC, MR.NAZWAMARKI, MD.NAZWAMODEL";
+    }
+
+
+    if (isset($fields['miejscaMin']) && isset($fields['miejscaMax'])) 
+    {
+        if ($fields['miejscaMin'] > $fields['miejscaMax'])
+        {
+            $temp = $_POST['miejscaMin'];
+            $_POST['miejscaMin'] = $_POST['miejscaMax'];
+            $_POST['miejscaMax'] = $temp;
+            unset($temp);
+        }
+    }
+
+    if (empty($fields['segment'])) 
+    {
+        $fields['segment'] = "%";
+    }
+
+    if (empty($fields['skrzynia'])) 
+    {
+        $fields['skrzynia'] = "%";
+    }
+
+    if (empty($fields['paliwo'])) 
+    {
+        $fields['paliwo'] = "%";
+    }
+
+    if (empty($fields['miejscaMin'])) 
+    {
+        $_POST['miejscaMin'] = 0;
+    }
+
+    if (empty($fields['miejscaMax'])) 
+    {
+        $_POST['miejscaMax'] = 100;
+    }
 
 
     try 
     {
-        if (isset($_POST['find'])) 
-        {
-            if (isset($fields['sortuj'])) 
-            {
-                switch ($fields['sortuj']) 
-                {
-                    case "MARKAUP":
-                        $dborderby = "A.DOSTEPNY DESC, MR.NAZWAMARKI ASC";
-                        break;
 
-                    case "MARKADOWN":
-                        $dborderby = "A.DOSTEPNY DESC, MR.NAZWAMARKI DESC";
-                        break;
+        $pstmt = $db->prepare("SELECT IDAUTO FROM AUTA A
+                                WHERE A.AKTYWNY = TRUE
+                                AND CAST(A.IDSEGMENT AS TEXT) LIKE :segment
+                                AND CAST(A.SKRZYNIA AS TEXT) LIKE :skrzynia
+                                AND CAST(A.IDPALIWO AS TEXT) LIKE :paliwo
+                                AND A.LICZBAMIEJSC >= :miejscaMin AND A.LICZBAMIEJSC <= :miejscaMax;");
 
-                    case "MOCUP":
-                        $dborderby = "A.DOSTEPNY DESC, MOCKW ASC";
-                        break;
-
-                    case "MOCDOWN":
-                        $dborderby = "A.DOSTEPNY DESC, MOCKW DESC";
-                        break;
-
-                    case "CENADOBAUP":
-                        $dborderby = "A.DOSTEPNY DESC, CENADOBA ASC, CENAKM ASC";
-                        break;
-
-                    case "CENADOBADOWN":
-                        $dborderby = "A.DOSTEPNY DESC, CENADOBA DESC, CENAKM DESC";
-                        break;
-
-                    case "CENAKMUP":
-                        $dborderby = "A.DOSTEPNY DESC, CENAKM ASC, CENADOBA ASC";
-                        break;
-
-                    case "CENAKMDOWN":
-                        $dborderby = "A.DOSTEPNY DESC, CENAKM DESC, CENADOBA DESC;";
-                        break;
-
-                    default:
-                        $dborderby = "A.DOSTEPNY DESC, S.NAZWASEGMENT ASC, MR.NAZWAMARKI, MD.NAZWAMODEL";
-                        break;
-                }
-            } 
-            else 
-            {
-                $dborderby = "A.DOSTEPNY DESC, S.NAZWASEGMENT ASC, MR.NAZWAMARKI, MD.NAZWAMODEL";
-            }
-
-            if (isset($fields['segment'])) {
-                $dbwhere = $dbwhere . ", A.IDSEGMENT = :segment";
-            }
-
-            if (isset($fields['skrzynia'])) {
-                $dbwhere = $dbwhere . ", A.SKRZYNIA = :skrzynia";
-            }
-
-            if (isset($fields['paliwo'])) {
-                $dbwhere = $dbwhere . ", A.IDPALIWO = :paliwo";
-            }
-
-            if(isset($fields['miejscaMin']) && isset($fields['miejscaMax']))
-            {
-                if($fields['miejscaMin'] > $fields['miejscaMax'])
-                {
-                    $temp = $fields['miejscaMin'];
-                    $fields['miejscaMin'] = $fields['miejscaMax'];
-                    $fields['miejscaMax'] = $temp;
-                    unset($temp);
-                }
-            }
-
-            if (isset($fields['miejscaMin'])) {
-                $dbwhere = $dbwhere . ", A.LICZBAMIEJSC >= :miejscaMin";
-            }
-
-            if (isset($fields['miejscaMax'])) {
-                $dbwhere = $dbwhere . ", A.LICZBAMIEJSC <= :miejscaMax";
-            }
-        }
-        else
-        {
-            $dborderby = "A.DOSTEPNY DESC, S.NAZWASEGMENT ASC, MR.NAZWAMARKI, MD.NAZWAMODEL";
-        }
-
+        $pstmt->bindValue(':segment', $fields['segment'], PDO::PARAM_STR);
+        $pstmt->bindValue(':skrzynia', $fields['skrzynia'], PDO::PARAM_STR);
+        $pstmt->bindValue(':paliwo', $fields['paliwo'], PDO::PARAM_STR);
+        $pstmt->bindValue(':miejscaMin', $_POST['miejscaMin'], PDO::PARAM_INT);
+        $pstmt->bindValue(':miejscaMax', $_POST['miejscaMax'], PDO::PARAM_INT);
+        $pstmt->execute();
+        $auta = $pstmt->fetchAll();
 
         $stmt = $db->prepare("SELECT IDAUTO, VIN, REJESTRACJA, Z.SCIEZKA AS ZDJECIE, Z.TYTUL AS TYTUL, S.NAZWASEGMENT AS SEGMENT, MR.NAZWAMARKI AS MARKA, MD.NAZWAMODEL AS MODEL, P.NAZWAPALIWO AS PALIWO, MOCKW, SKRZYNIA, LICZBAMIEJSC, ROK, SPRAWNY, DOSTEPNY, PRZEBIEG, CENADOBA, CENAKM, UWAGI
             FROM AUTA A
@@ -162,11 +188,23 @@ if(isset($_SESSION['user']))
             INNER JOIN SEGMENT S ON A.IDSEGMENT=S.IDSEGMENT
             INNER JOIN PALIWO P ON A.IDPALIWO=P.IDPALIWO
             LEFT JOIN ZDJECIA Z ON A.IDZDJECIE=Z.IDZDJECIE
-            WHERE {$dbwhere}
-            ORDER BY {$dborderby};");
+            WHERE A.AKTYWNY = TRUE
+            AND CAST(A.IDSEGMENT AS TEXT) LIKE :segment
+            AND CAST(A.SKRZYNIA AS TEXT) LIKE :skrzynia
+            AND CAST(A.IDPALIWO AS TEXT) LIKE :paliwo
+            AND A.LICZBAMIEJSC >= :miejscaMin AND A.LICZBAMIEJSC <= :miejscaMax
+            ORDER BY {$dborderby}
+            LIMIT :limit
+            OFFSET :offset;");
 
-        //$stmt->bindValue(':dbwhere', $dbwhere);
-        //$stmt->bindValue(':dborderby', $dborderby);
+        $stmt->bindValue(':segment', $fields['segment'], PDO::PARAM_STR);
+        $stmt->bindValue(':skrzynia', $fields['skrzynia'], PDO::PARAM_STR);
+        $stmt->bindValue(':paliwo', $fields['paliwo'], PDO::PARAM_STR);
+        $stmt->bindValue(':miejscaMin', $_POST['miejscaMin'], PDO::PARAM_INT);
+        $stmt->bindValue(':miejscaMax', $_POST['miejscaMax'], PDO::PARAM_INT);
+        
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         
         $stmt->execute();
 
@@ -176,138 +214,9 @@ if(isset($_SESSION['user']))
         $errors['read'] = "Błąd: " . $e->getMessage();
         console_log($errors['read']);
     }
+
+    $total_items = count($auta);
+    $total_pages = ceil($total_items / $items_per_page);
+    console_log("total_items: " . $total_items);
+    console_log("total_pages: " . $total_pages);
 }
-
-////Stary kod////
-/*
-if(empty($fields['typ']))
-{
-    $_POST['typ']="%";
-}
-
-if (!empty($fields['typ'])) 
-{
-    $dbrodzaj1 = $db->query("SELECT IDRODZAJ, NAZWARODZAJ FROM RODZAJ WHERE IDTYP={$fields['typ']};");
-    $dbrodzaj=$dbrodzaj1->fetchAll();
-    if(!in_array_r($_POST['rodzaj'], $dbrodzaj))
-    {
-        $fields['rodzaj']='';
-    }
-}
-
-switch($fields['sortuj'])
-{
-    case "KOD":
-        $_POST['sortuj']="KOD";
-        break;
-
-    case "MODEL":
-        $_POST['sortuj']="MODEL";
-        break;
-
-    case "CENA1":
-        $_POST['sortuj']="CENA";
-        break;
-
-    case "CENA2":
-        $_POST['sortuj']="CENA DESC";
-        break;
-    
-    default:
-        $_POST['sortuj']="KOD";
-        break;
-}
-
-if(empty($fields['typ']))
-{
-    $_POST['typ']="%";
-}
-
-if(empty($fields['rodzaj']))
-{
-    $_POST['rodzaj']="%";
-}
-
-if(empty($fields['fmarka']))
-{
-    $_POST['fmarka']="%";
-}
-
-if(isset($_POST['filtruj']))
-{
-    try {
-        $stmt = $db->prepare("SELECT KOD, T.NAZWATYP AS TYP, R.NAZWARODZAJ AS RODZAJ, M.NAZWA AS MARKA, MODEL, OPIS, ILOSC, CENA, PRODUKOWANY
-                            FROM SPRZET S
-                            INNER JOIN MARKA M ON S.IDMARKA=M.IDMARKA
-                            INNER JOIN RODZAJ R ON S.IDRODZAJ=R.IDRODZAJ
-                            INNER JOIN TYP T ON R.IDTYP=T.IDTYP
-                            WHERE CAST(T.IDTYP AS TEXT) LIKE :typ 
-                            AND CAST(S.IDRODZAJ AS TEXT) LIKE :rodzaj 
-                            AND CAST(M.IDMARKA AS TEXT) LIKE :marka 
-                            AND (ILOSC>0 OR PRODUKOWANY=TRUE)
-                            ORDER BY {$_POST['sortuj']}
-                            LIMIT :limit ;");
-        
-        $stmt->bindValue(':typ', $_POST['typ']);
-        $stmt->bindValue(':rodzaj', $_POST['rodzaj']);
-        $stmt->bindValue(':marka', $_POST['fmarka']);
-        $stmt->bindValue(':limit', $fields['limit']);
-        $stmt->execute();
-
-    } catch (PDOException $e) {
-        $errors['read'] = "Błąd: " . $e->getMessage();
-    }
-}
-else
-{
-    $stmt = $db->query("SELECT KOD, T.NAZWATYP AS TYP, R.NAZWARODZAJ AS RODZAJ, M.NAZWA AS MARKA, MODEL, OPIS, ILOSC, CENA, PRODUKOWANY
-                            FROM SPRZET S
-                            INNER JOIN MARKA M ON S.IDMARKA=M.IDMARKA
-                            INNER JOIN RODZAJ R ON S.IDRODZAJ=R.IDRODZAJ
-                            INNER JOIN TYP T ON R.IDTYP=T.IDTYP
-                            WHERE ILOSC>0 OR PRODUKOWANY=TRUE
-                            ORDER BY KOD
-                            LIMIT 50;");
-
-}
-
-
-if (isset($_POST['add'])) {
-    if (isset($_SESSION['cart'])) {
-        $item_array_id = array_column($_SESSION["cart"], "kod");
-        if (!in_array($_GET["kod"], $item_array_id)) {
-            if (empty($_POST["liczba"])) {
-                $_POST["liczba"] = '1';
-            }
-            $count = count($_SESSION["cart"]);
-            $item_array = array(
-                'kod' => $_GET["kod"],
-                'marka' => $_POST["marka"],
-                'model' => $_POST["model"],
-                'liczba' => $_POST["liczba"],
-                'cena' => $_POST["cena"]
-            );
-            $_SESSION["cart"][$count] = $item_array;
-        } else {
-            echo '<script>alert("Przedmiot został już dodany!")</script>';
-        }
-    } else {
-        if (empty($_POST["liczba"])) {
-            $_POST["liczba"] = '1';
-        }
-        $item_array = array(
-            'kod' => $_GET["kod"],
-            'marka' => $_POST["marka"],
-            'model' => $_POST["model"],
-            'liczba' => $_POST["liczba"],
-            'cena' => $_POST["cena"]
-        );
-        $_SESSION["cart"][0] = $item_array;
-    }
-}
-
-if (isset($_POST['edit'])) {
-    $_SESSION['equip'] = $_GET['kod'];
-    redirect(url("editEquip"));
-}
-*/
