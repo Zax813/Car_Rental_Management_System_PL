@@ -3,7 +3,7 @@
     unset($_SESSION['user']);
     unset($_SESSION['uname']);
     unset($_SESSION['perm']);
-    unset($_SESSION['cart']);
-    unset($_SESSION['selclient']);
+    unset($_SESSION['filters']);
+    session_unset();
     redirect(url('login'));
 ?>

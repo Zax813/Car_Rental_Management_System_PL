@@ -5,7 +5,7 @@ unset($_SESSION['carAddStorage']);
 if(isset($_SESSION['user']))
 {
     
-    $items_per_page = 2; //Limit samochodów na stronę
+    $items_per_page = 10; //Limit samochodów na stronę
 
     if (array_key_exists('event', $_GET)) 
     {
@@ -65,14 +65,24 @@ if(isset($_SESSION['user']))
     $limit = $items_per_page;
     $offset = ($current_page - 1) * $items_per_page;
 
-    
-
-    $fields['sortuj'] = array_key_exists('sortuj', $_POST) ? $_POST['sortuj'] : '';
-    $fields['segment'] = array_key_exists('segment', $_POST) ? $_POST['segment'] : '';
-    $fields['skrzynia'] = array_key_exists('skrzynia', $_POST) ? $_POST['skrzynia'] : '';
-    $fields['paliwo'] = array_key_exists('paliwo', $_POST) ? $_POST['paliwo'] : '';
-    $fields['miejscaMin'] = array_key_exists('miejscaMin', $_POST) ? $_POST['miejscaMin'] : '';
-    $fields['miejscaMax'] = array_key_exists('miejscaMax', $_POST) ? $_POST['miejscaMax'] : '';
+    if(isset($_SESSION['filters']))
+    {
+        $fields['sortuj'] = array_key_exists('sortuj', $_POST) ? $_POST['sortuj'] : $_SESSION['filters']['sortuj'];
+        $fields['segment'] = array_key_exists('segment', $_POST) ? $_POST['segment'] : $_SESSION['filters']['segment'];
+        $fields['skrzynia'] = array_key_exists('skrzynia', $_POST) ? $_POST['skrzynia'] : $_SESSION['filters']['skrzynia'];
+        $fields['paliwo'] = array_key_exists('paliwo', $_POST) ? $_POST['paliwo'] : $_SESSION['filters']['paliwo'];
+        $fields['miejscaMin'] = array_key_exists('miejscaMin', $_POST) ? $_POST['miejscaMin'] : $_SESSION['filters']['miejscaMin'];
+        $fields['miejscaMax'] = array_key_exists('miejscaMax', $_POST) ? $_POST['miejscaMax'] : $_SESSION['filters']['miejscaMax'];
+    }
+    else
+    {
+        $fields['sortuj'] = array_key_exists('sortuj', $_POST) ? $_POST['sortuj'] : '';
+        $fields['segment'] = array_key_exists('segment', $_POST) ? $_POST['segment'] : '';
+        $fields['skrzynia'] = array_key_exists('skrzynia', $_POST) ? $_POST['skrzynia'] : '';
+        $fields['paliwo'] = array_key_exists('paliwo', $_POST) ? $_POST['paliwo'] : '';
+        $fields['miejscaMin'] = array_key_exists('miejscaMin', $_POST) ? $_POST['miejscaMin'] : '';
+        $fields['miejscaMax'] = array_key_exists('miejscaMax', $_POST) ? $_POST['miejscaMax'] : '';
+    }
 
     $dbwhere = 'A.AKTYWNY IS TRUE';
     $dborderby = '';
@@ -133,6 +143,10 @@ if(isset($_SESSION['user']))
             $temp = $_POST['miejscaMin'];
             $_POST['miejscaMin'] = $_POST['miejscaMax'];
             $_POST['miejscaMax'] = $temp;
+
+            $temp = $fields['miejscaMin'];
+            $fields['miejscaMin'] = $fields['miejscaMax'];
+            $fields['miejscaMax'] = $temp;
             unset($temp);
         }
     }
@@ -162,6 +176,10 @@ if(isset($_SESSION['user']))
         $_POST['miejscaMax'] = 100;
     }
 
+    if(array_key_exists('find', $_POST))
+    {
+        $_SESSION['filters'] = $fields;
+    }
 
     try 
     {
