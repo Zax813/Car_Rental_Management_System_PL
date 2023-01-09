@@ -52,7 +52,7 @@
             
             echo "<tr>
                 <td>Uwagi
-                <td>{$row['uwagi']}
+                <td><textarea class='col-md-12' id='uwagi' name='uwagi' rows='5' cols='40' disabled>{$row['uwagi']}</textarea>
 
         "
         ?>
@@ -62,7 +62,6 @@
     <?php
     if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") {
         echo "<a class='btn btn-info btn-sm mr-1' href='index.php?action=rentDetails&event=back' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>";
-        echo "<a class='btn btn-warning btn-sm mx-2' href='index.php?action=rentDetails&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i> Edytuj</a>";
     }
     ?>
 </div>

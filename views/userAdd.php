@@ -57,7 +57,10 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 				<label class='control-label' for='uprawnienia'>Uprawnienia</label>
 				<div class='controls'>
 					<select id='uprawnienia' name='uprawnienia'>
+						<?php if($fields['disabled'] == FALSE)
+						{?>
 						<option>admin</option>
+					<?php } ?>
 						<option>kierownik</option>
 						<option selected>pracownik</option>
 					</select>

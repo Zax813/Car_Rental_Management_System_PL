@@ -60,7 +60,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="vin">VIN:</label>
                 <div class='controls'>
-                    <input type="text" class="col-md-12" id="vin" name="vin" value="<?php echo $fields['vin'] ?>">
+                    <input type="text" class="col-md-12" id="vin" name="vin" maxlength="20" value="<?php echo $fields['vin'] ?>">
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="numer">Numer rejestracyjny:</label>
                 <div class='controls'>
-                    <input type="text" class="col-md-12" id="numer" name="numer" value="<?php echo $fields['numer'] ?>">
+                    <input type="text" class="col-md-12" id="numer" name="numer" maxlength="10" value="<?php echo $fields['numer'] ?>">
                 </div>
             </div>
             <?php if (array_key_exists('vin', $errors)) : ?><span><?php echo $errors['vin'] ?></span><?php endif; ?>
@@ -80,7 +80,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="rok">Rok produkcji:</label>
                 <div class='controls'>
-                    <input type="number" class="col-md-12" id="rok" name="rok" min='1900' value="<?php echo $fields['rok'] ?>">
+                    <input type="number" class="col-md-12" id="rok" name="rok" min="1900" max="3000" value="<?php echo $fields['rok'] ?>">
                 </div>
             </div>
 
@@ -88,7 +88,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="przebieg">Przebieg:</label>
                 <div class='controls'>
-                    <input type="number" class="col-md-12" id="przebieg" name="przebieg" min='0' value="<?php echo $fields['przebieg'] ?>">
+                    <input type="number" class="col-md-12" id="przebieg" name="przebieg" min="0" max="10000000" value="<?php echo $fields['przebieg'] ?>">
                 </div>
             </div>
 
@@ -163,7 +163,7 @@
             <div class='col-md-4 mb-2'>
                 <label class='control-label' for="mockw">Moc silnika (kW):</label>
                 <div class='controls'>
-                    <input type="number" class="col-md-12" id="mockw" name="mockw" min='0' value="<?php echo $fields['mockw'] ?>">
+                    <input type="number" class="col-md-12" id="mockw" name="mockw" min='0' max='10000' value="<?php echo $fields['mockw'] ?>">
                 </div>
             </div>
 
@@ -171,7 +171,7 @@
             <div class='col-md-4 mb-2'>
                 <label class='control-label' for="liczbamiejsc">Liczba miejsc:</label>
                 <div class='controls'>
-                    <input type="number" class="col-md-12" id="liczbamiejsc" name="liczbamiejsc" min='1' max='9' value="<?php echo $fields['liczbamiejsc'] ?>">
+                    <input type="number" class="col-md-12" id="liczbamiejsc" name="liczbamiejsc" min="1" max="9" value="<?php echo $fields['liczbamiejsc'] ?>">
                 </div>
             </div>
 
@@ -185,7 +185,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="cenadoba">Cena za dobę (zł):</label>
                 <div class='controls'>
-                    <input type="number" class="col-md-12" id="cenadoba" name="cenadoba" step="0.01" min="0" value="<?php echo $fields['cenadoba'] ?>">
+                    <input type="number" class="col-md-12" id="cenadoba" name="cenadoba" step="0.01" min="0" max="10000000" value="<?php echo $fields['cenadoba'] ?>">
                 </div>
             </div>
 
@@ -193,7 +193,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="cenakm">Cena za km (zł):</label>
                 <div class='controls'>
-                    <input type="number" class="col-md-12" id="cenakm" name="cenakm" step="0.01" min="0" value="<?php echo $fields['cenakm'] ?>">
+                    <input type="number" class="col-md-12" id="cenakm" name="cenakm" step="0.01" min="0" max="10000000" value="<?php echo $fields['cenakm'] ?>">
                 </div>
             </div>
             <?php if (array_key_exists('cenadoba', $errors)) : ?><span><?php echo $errors['cenadoba'] ?></span><?php endif; ?>

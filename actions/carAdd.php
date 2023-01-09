@@ -90,10 +90,20 @@ if (isset($_SESSION['carAdd'])) {
         {
             $errors['marka'] = 'Pole marka nie może być puste';
         }
+        else
+        {
+            $fields['marka'] = validTextDB($fields['marka']);
+            $_POST['marka'] = $fields['marka'];
+        }
 
         if(empty($fields['model']))
         {
             $errors['model'] = 'Pole model nie może być puste';
+        }
+        else
+        {
+            $fields['model'] = validTextDB($fields['model']);
+            $_POST['model'] = $fields['model'];
         }
 
         if(empty($fields['vin']))
@@ -168,7 +178,7 @@ if (isset($_SESSION['carAdd'])) {
                 $db -> beginTransaction();
 
                 $pstmt = $db->prepare('SELECT IDMARKA FROM MARKA WHERE NAZWAMARKI = :marka');
-                $pstmt -> bindValue(':marka', validTextDB($fields['marka']), PDO::PARAM_STR);
+                $pstmt -> bindValue(':marka', $fields['marka'], PDO::PARAM_STR);
                 $pstmt -> execute();
 
                 $idmarka = $pstmt -> fetch(PDO::FETCH_ASSOC);
@@ -176,14 +186,14 @@ if (isset($_SESSION['carAdd'])) {
                 if(empty($idmarka))
                 {
                     $pstmt = $db->prepare('INSERT INTO MARKA (NAZWAMARKI) VALUES (:marka)');
-                    $pstmt -> bindValue(':marka', validTextDB($fields['marka']), PDO::PARAM_STR);
+                    $pstmt -> bindValue(':marka', $fields['marka'], PDO::PARAM_STR);
                     $pstmt -> execute();
 
                     $idmarka = $db->lastInsertId();
                 }
                 else
                 {
-                    $idmarka = intval($idmarka['IDMARKA']);
+                    $idmarka = $idmarka['idmarka'];
                 }
 
                 $pstmt = $db->prepare('SELECT IDMODEL FROM MODEL WHERE NAZWAMODEL = :model');
@@ -240,7 +250,7 @@ if (isset($_SESSION['carAdd'])) {
                 $newid = $db->lastInsertId();
                 console_log("Dane dodane pomyślnie");
                 unset($_SESSION['rentAdd']);
-                redirect(url("rentList&value={$newid}&event=details"));
+                redirect(url("home&value={$newid}&event=details"));
             }
 
         }

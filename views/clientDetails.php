@@ -43,7 +43,7 @@
                 <td>{$row['email']}
             <tr>
                 <td>Uwagi
-                <td>{$row['uwagi']}
+                <td><textarea class='col-md-12' id='uwagi' name='uwagi' rows='5' cols='40' disabled>{$row['uwagi']}</textarea>
         ";
         ?>
     </table>

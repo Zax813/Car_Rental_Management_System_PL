@@ -30,11 +30,12 @@
                 <td>Opis
                 <td>{$row['opis']}
             <tr>
-                <td>Uwagi
-                <td>{$row['uwagi']}
-            <tr>
                 <td>Koszt
                 <td>{$row['koszt']}
+            <tr>
+                <td>Uwagi
+                <td><textarea class='col-md-12' id='uwagi' name='uwagi' rows='5' cols='40' disabled>{$row['uwagi']}</textarea>
+            
         ";
         ?>
     </table>

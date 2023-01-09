@@ -25,6 +25,22 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
             $fields['zatrudniony'] = array_key_exists('zatrudniony', $_POST) ? $_POST['zatrudniony'] : $row['zatrudniony'];
         }
 
+        if($_SESSION['perm'] == "admin" )
+        {
+            $fields['disabled'] = FALSE;
+            $fields['disabledSelect'] = '';
+        }
+        else
+        {
+            $fields['disabled'] = TRUE;
+            if($row['uprawnienia'] == "admin")
+            {
+                $fields['disabledSelect'] = 'disabled';
+                $fields['disabled'] = FALSE;
+            }
+        }
+
+
         $errors = array();
 
         if (isset($_POST["accept"])) {

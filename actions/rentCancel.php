@@ -21,7 +21,7 @@ if(isset($_SESSION['rentCancel']))
         $uwagi = "ANULOWANO\n".$row['uwagi'];
 
         $stmt = $db->prepare("UPDATE wypozyczenia
-                                SET datakoniec=:datakoniec, przebiegkoniec=:przebiegkoniec, suma=:suma, zaplacono=TRUE, uwagi=:uwagi
+                                SET datakoniec=:datakoniec, przebiegkoniec=:przebiegkoniec, suma=:suma, zaplacono=TRUE, uwagi=:uwagi, realizacja=FALSE
                                 WHERE idwypozyczenia=:id;");
 
         $stmt->bindValue(':id', $_SESSION['rentCancel']);

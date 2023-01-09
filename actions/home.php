@@ -136,7 +136,7 @@ if(isset($_SESSION['user']))
     }
 
 
-    if (isset($fields['miejscaMin']) && isset($fields['miejscaMax'])) 
+    if (!empty($fields['miejscaMin']) && !empty($fields['miejscaMax'])) 
     {
         if ($fields['miejscaMin'] > $fields['miejscaMax'])
         {

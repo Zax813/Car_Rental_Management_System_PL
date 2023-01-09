@@ -13,7 +13,7 @@
             <div class='col-md-6 mb-2'>
                 <label class='control-label' for="datapoczatek">Data rozpoczęcia:</label>
                 <div class='controls'>
-                    <input type="date" class='col-md-12' id="datapoczatek" name="datapoczatek" value="<?php echo $fields['datapoczatek']; ?>">
+                    <input type="date" class='col-md-12' id="datapoczatek" name="datapoczatek" <?php echo "min='{$preweek}' max='{$maxdate}' value='{$fields['datapoczatek']}'"; ?>>
                 </div>
             </div>
 

@@ -57,6 +57,8 @@ if (isset($_SESSION['rentAdd'])) {
 
     // Pobierz aktualną datę w formacie YYYY-MM-DD
     $today = date("Y-m-d");
+    $preweek = date("Y-m-d", strtotime("-7 day"));
+    $maxdate = date("Y-m-d", strtotime("+30 day"));
 
     // Dodaj dzień do przodu
     $nextDay = date("Y-m-d", strtotime("+1 day"));

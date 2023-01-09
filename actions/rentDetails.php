@@ -40,6 +40,7 @@ if (array_key_exists('event', $_GET))
 
     if ($_GET['event'] == "car") 
     {
+        $_SESSION['carDetails']=$row['idauta'];
         //unset($_SESSION['rentDetails']);
         redirect(url('carDetails'));
     }

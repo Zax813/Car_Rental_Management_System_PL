@@ -44,30 +44,28 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         <td>{$row['telefon']}
                         <td>{$row['datapoczatek']}
                         <td>{$row['datakoniec']}";
-                        if($row['datapoczatek'] > date('Y-m-d'))
+                        if($row['realizacja'] == TRUE)
                         {
-                            echo "<td style='color: orange'>Zaplanowany<td>";
-                        }
-                        else if($row['datakoniec'] == null || !$row['datakoniec'] || $row['datakoniec'] > date('Y-m-d'))
-                        {
-                            echo "<td style='color: red'>Trwa<td>";
-                        }
-                        else if($row['datapoczatek']==$row['datakoniec'])
+                            if($row['datapoczatek'] > date('Y-m-d'))
+                            {
+                                echo "<td style='color: orange'>Zaplanowany<td>";
+                            }
+                            else if($row['datakoniec'] == null || !$row['datakoniec'] || $row['datakoniec'] > date('Y-m-d'))
+                            {
+                                echo "<td style='color: red'>Trwa<td>";
+                            }
+                            else
+                            {
+                                echo "<td style='color: green'>Zakończony<td>";
+                            }
+                        }else
                         {
                             echo "<td style='color: blue'>Anulowano<td>";
-                        }
-                        else
-                        {
-                            echo "<td style='color: green'>Zakończony<td>";
                         }
 
                         echo "<a class='btn btn-info btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
                         if($row['zaplacono']==false)
                         {
-                            if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
-                            {
-                                echo "<a class='btn btn-warning btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a>";
-                            }
                             if($row['datapoczatek'] >= date('Y-m-d'))
                             {
                                 echo "<a class='btn btn-danger btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=cancel' title='Anuluj' name='cancel'><i class='bi bi-calendar-x'></i></a>"; 

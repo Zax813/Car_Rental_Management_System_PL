@@ -22,6 +22,16 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
     $errors = array();
     $info = "";
 
+    if($_SESSION['perm'] == "admin" )
+    {
+        $fields['disabled'] = FALSE;
+    }
+    else
+    {
+        $fields['disabled'] = TRUE;
+    }
+
+
     if(isset($_POST["acceptAdd"])) 
     {
         if (empty($fields['imie']))

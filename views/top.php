@@ -30,6 +30,7 @@
 					echo "<a href='index.php?action=carInspectionList' name='carInspectionList'>Przeglądy</a>";
 					echo "<a href='index.php?action=carServiceList' name='carServiceList'>Serwisy</a>";
 					echo "<a href='index.php?action=userList' name='userList'>Pracownicy</a>";
+					echo "<a href='index.php?action=carList' name='carList'>Lista Samochodów</a>";
 				echo "</div>";
 
 				//Guzik otwierania panelu bocznego

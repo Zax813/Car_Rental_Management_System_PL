@@ -39,26 +39,26 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 			<div class='form-group mb-2'>
 				<label class='control-label' for='haslo'>Hasło</label>
 				<div class='controls'>
-					<input id='haslo' type="password" name="haslo" value='' />
+					<input id='haslo' type="password" name="haslo" value='' <?php echo $fields['disabledSelect']; ?>/>
 				</div>
 			</div>
 
 			<div class='form-group mb-2'>
 				<label class='control-label' for='uprawnienia'>Uprawnienia</label>
 				<div class='controls'>
-					<select id='uprawnienia' name="uprawnienia">
+					<select id='uprawnienia' name="uprawnienia" <?php echo $fields['disabledSelect']; ?>>
+					<?php if($fields['disabled'] == FALSE)
+					{?>
 						<option value="admin" <?php if ($fields['uprawnienia'] == 'admin') {
 													echo " selected";
 												} ?>>admin</option>
+					<?php } ?>
 						<option value="kierownik" <?php if ($fields['uprawnienia'] == 'kierownik') {
 														echo " selected";
 													} ?>>kierownik</option>
 						<option value="pracownik" <?php if ($fields['uprawnienia'] == 'pracownik') {
 														echo " selected";
 													} ?>>pracownik</option>
-						<option value="sprzedawca" <?php if ($fields['uprawnienia'] == 'sprzedawca') {
-														echo " selected";
-													} ?>>sprzedawca</option>
 					</select>
 					<?php if (array_key_exists('uprawnienia', $errors)) : ?><span><?php echo $errors['uprawnienia'] ?></span><?php endif; ?>
 				</div>
