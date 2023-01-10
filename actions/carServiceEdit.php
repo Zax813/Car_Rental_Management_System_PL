@@ -28,6 +28,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
         }
 
         $errors = array();
+        $today = date("Y-m-d");
 
         if (isset($_POST["acceptAdd"])) {
 
@@ -93,6 +94,13 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         $ustmt->bindValue(':uwagi', $_POST['uwagi']);
                         $ustmt->bindValue(':koszt', $_POST['koszt']);
                         $ustmt->execute();
+                    }
+
+                    if($fields['datakoniec'] == $today)
+                    {
+                        $cstmt = $db->prepare("UPDATE auta SET dostepny=TRUE, sprawny=TRUE WHERE idauto=:idauta;");
+                        $cstmt->bindValue(':idauta', $idauta, PDO::PARAM_INT);
+                        $cstmt->execute();
                     }
         
                     $db->commit();

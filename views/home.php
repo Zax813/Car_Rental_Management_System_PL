@@ -5,7 +5,8 @@
 <div class='form-outline mx-5 my-3'>
     <?php
     if ($_SESSION['perm'] == "admin") {
-        echo "<a href='index.php?action=home&event=carAdd' class='btn btn-info' name='carAdd'>Dodaj samochód</a>";
+        echo "<a href='index.php?action=home&event=carAdd' class='btn btn-info me-2' name='carAdd'>Dodaj samochód</a>";
+        echo "<a href='index.php?action=carList' class='btn btn-info ms-2' name='carList'>Lista samochodów</a>";
     }
     ?>
 </div>

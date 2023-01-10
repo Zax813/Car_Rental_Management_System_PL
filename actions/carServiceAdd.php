@@ -108,6 +108,7 @@ if (isset($_POST["acceptAdd"])) {
                 {
                     $stmt = $db->prepare("UPDATE AUTA SET dostepny=FALSE, sprawny=FALSE
                                             WHERE IDAUTO=:idauto");
+                                            
                     $stmt->bindValue(':idauto', $idauta, PDO::PARAM_INT);
                     $stmt->execute();
                 }
