@@ -45,6 +45,11 @@ if(isset($_SESSION['user']))
             $_SESSION['carDetails'] = $_GET['value'];
             redirect(url('carDetails'));
         }
+
+        if ($_GET['event'] == "history") {
+            $_SESSION['carHistory'] = $_GET['value'];
+            redirect(url('carHistory'));
+        }
     }
 
     if (array_key_exists('page', $_GET)) 

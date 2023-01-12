@@ -9,7 +9,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
 
 </div>
 <div class='form-outline mx-5 my-2'>
-    <table id="userTable" class="table table-dark table-striped">
+    <table id="userTable" class="table table-striped">
         <thead>    
             <tr>
                 <th scope="col">ID</th>
@@ -55,9 +55,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         
                         if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         {
-                            echo "<a class='btn btn-info btn-sm' href='index.php?action=clientList&value={$row['idprzegladu']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
-                            echo "<a class='btn btn-warning btn-sm' href='index.php?action=clientList&value={$row['idprzegladu']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a></td>";
-                            //echo "</td>";
+                            echo "<a class='btn btn-info btn-sm' href='index.php?action=carInspectionList&value={$row['idprzegladu']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
                         }
                         echo "</tr>";
                     }

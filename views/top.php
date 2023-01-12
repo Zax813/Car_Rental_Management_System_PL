@@ -27,8 +27,8 @@
 					echo "<a href='index.php?action=home' name='equipList'>Samochody</a>";
 					echo "<a href='index.php?action=rentList' name='rentList'>Wypożyczenia</a>";
 					echo "<a href='index.php?action=clientList' name='clientList'>Klienci</a>";
-					echo "<a href='index.php?action=carInspectionList' name='carInspectionList'>Przeglądy</a>";
 					echo "<a href='index.php?action=carServiceList' name='carServiceList'>Serwisy</a>";
+					echo "<a href='index.php?action=carInspectionList' name='carInspectionList'>Przeglądy</a>";
 					echo "<a href='index.php?action=userList' name='userList'>Pracownicy</a>";
 				echo "</div>";
 
@@ -42,9 +42,9 @@
 					echo "<a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>&times;</a>";
 					echo "<a href='index.php?action=home' name='equipList'>Samochody</a>";
 					echo "<a href='index.php?action=rentList' name='rentList'>Wypożyczenia</a>";
-					echo "<a href='index.php?action=clientList' name='clientList'>Klienci</a>";
-					echo "<a href='index.php?action=carInspectionList' name='carInspectionList'>Przeglądy</a>";
+					echo "<a href='index.php?action=clientList' name='clientList'>Klienci</a>";	
 					echo "<a href='index.php?action=carServiceList' name='carServiceList'>Serwisy</a>";
+					echo "<a href='index.php?action=carInspectionList' name='carInspectionList'>Przeglądy</a>";
 					echo "<a href='index.php?action=userList' name='userList'>Pracownicy</a>";
 				echo "</div>";
 

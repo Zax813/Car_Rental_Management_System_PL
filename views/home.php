@@ -158,6 +158,7 @@
                             echo "<p class='card-text mt-1'><small style='color: red;'>Nie dostępny</small></p>";
 
                         echo "<a class='btn btn-info btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=details' title='Szczegóły' name='details'><i class='bi bi-info-circle'></i></a>";
+                        echo "<a class='btn btn-secondary btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=history' title='Historia' name='history'><i class='bi bi-journal-text'></i></a>";
                         if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                             echo "<a class='btn btn-warning btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a>";
                         ?>

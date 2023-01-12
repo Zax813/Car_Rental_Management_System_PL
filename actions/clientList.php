@@ -20,4 +20,9 @@ if ((array_key_exists('event', $_GET))) {
         $_SESSION['clientDetails'] = $_GET['value'];
         redirect(url('clientDetails'));
     }
+
+    if ($_GET['event'] == "history") {
+        $_SESSION['clientHistory'] = $_GET['value'];
+        redirect(url('clientHistory'));
+    }
 }

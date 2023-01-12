@@ -61,7 +61,7 @@ if(isset($_SESSION['user']))
             'end' => $event['datakoniec'],
             'title' => $title,
         ];
-}
+    }
 
 
 }
