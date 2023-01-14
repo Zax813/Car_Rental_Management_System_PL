@@ -48,9 +48,11 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
 
                         if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         {
-                            echo "<a class='btn btn-info btn-sm' href='index.php?action=userList&value={$row['idpracownika']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
-                            echo "<a class='btn btn-warning btn-sm' href='index.php?action=userList&value={$row['idpracownika']}&event=add' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a></td>";
-                            //echo "</td>";
+                            echo "<a class='btn btn-info btn-sm me-1' href='index.php?action=userList&value={$row['idpracownika']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
+                            if($_SESSION['perm'] == "admin")
+                            {
+                                echo "<a class='btn btn-warning btn-sm me-1' href='index.php?action=userList&value={$row['idpracownika']}&event=add' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a></td>";
+                            }
                         } 
                         echo "</tr>";
                     }

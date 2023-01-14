@@ -1,6 +1,6 @@
 <?php
 
-if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") 
+if ($_SESSION['perm'] == "admin") 
 {
     if((array_key_exists('event', $_GET)))
     {

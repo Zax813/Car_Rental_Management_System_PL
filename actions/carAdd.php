@@ -152,15 +152,22 @@ if (isset($_SESSION['carAdd'])) {
 
         }
 
-        if(empty($fields['cenakm']))
+        if(empty($fields['cenakm']) && empty($fields['cenadoba']))
         {
             $errors['cenakm'] = 'Pole cena za kilometr nie może być puste';
-        }
-
-        if(empty($fields['cenadoba']))
-        {
             $errors['cenadoba'] = 'Pole cena za dobę nie może być puste';
         }
+
+        if(empty($fields['cenakm']) && !empty($fields['cenadoba']))
+        {
+            $fields['cenakm'] = 0;
+        }
+
+        if(!empty($fields['cenakm']) && empty($fields['cenadoba']))
+        {
+            $fields['cenadoba'] = 0;
+        }
+
 
         if(empty($fields['uwagi']))
         {

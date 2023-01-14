@@ -4,6 +4,7 @@
     <a class='btn btn-info btn-sm' href='index.php?action=carEdit&event=list' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>
 </div>
 
+<?php if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") { ?>
 <!-- Formularz wpisywania nowego serwisu -->
 <div class='form-outline mx-5 d-flex justify-content-center'>
     <form class='form-horizontal' action="index.php?action=carEdit" id="carEditForm" method="post">
@@ -161,3 +162,7 @@
 
     </form>
 </div>
+
+<?php 
+} 
+?>

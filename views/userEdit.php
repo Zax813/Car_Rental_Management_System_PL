@@ -1,7 +1,7 @@
 <meta charset="utf-8" />
 
 <?php
-if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
+if ($_SESSION['perm'] == 'admin') {
 ?>
 	<h2 class='form-outline mx-5 my-2'>Edytuj pracownika</h2>
 
@@ -82,7 +82,7 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 
 			<div class='form-group mb-2'>
 				<label>Zatrudniony</label>
-				<input class='mx-2' type="checkbox" name="zatrudniony" value='true' <?php if ($fields['zatrudniony'] == 'true') {
+				<input class='mx-2' type="checkbox" id="zatrudniony" name="zatrudniony" value='true' <?php if ($fields['zatrudniony'] == 'true') {
 																						echo " checked";
 																					} ?> />
 			</div>
@@ -95,4 +95,14 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 
 	<?php
 }
+
+	if($_SESSION['perm'] == "admin" )
+	{
+		echo '<script>document.getElementById("zatrudniony").disabled = false;</script>';
+	}
+	else
+	{
+		echo '<script>document.getElementById("zatrudniony").disabled = true;</script>';
+	}
+
 	?>

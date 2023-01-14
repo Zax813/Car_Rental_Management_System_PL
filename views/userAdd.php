@@ -32,7 +32,7 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 			<div class='form-group mb-2'>
 				<label class='control-label' for='login'>Login</label>
 				<div class='controls'>
-					<input id='login' type='text' name='login' value='<?php echo $fields['login'] ?>' />
+					<input id='login' type='text' name='login' minlength='3' maxlength='30'  value='<?php echo $fields['login'] ?>' />
 					<?php if (array_key_exists('login', $errors)) : ?><span><?php echo $errors['login'] ?></span><?php endif; ?>
 				</div>
 			</div>
@@ -40,7 +40,7 @@ if ($_SESSION['perm'] == 'admin' || $_SESSION['perm'] == 'kierownik') {
 			<div class='form-group mb-2'>
 				<label class='control-label' for='haslo'>Hasło</label>
 				<div class='controls'>
-					<input id='haslo' type='password' name='haslo' value='' />
+					<input id='haslo' type='password' name='haslo' minlength='8' value='' />
 					<?php if (array_key_exists('haslo', $errors)) : ?><span><?php echo $errors['haslo'] ?></span><?php endif; ?>
 				</div>
 			</div>

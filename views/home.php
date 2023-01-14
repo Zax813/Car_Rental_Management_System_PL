@@ -112,63 +112,69 @@
 </form>
 
 <!-- Wyswietlenie samochodów -->
-<?php foreach ($result as $row) { ?>
-    <div class="card mb-3 mx-5">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <?php
-                if ($row['zdjecie'] != null)
-                    echo "<img src='{$row['zdjecie']}' class='h-100 card-img' alt='{$row['tytul']}'>";
-                else
-                    echo "<img src='images/sedan-car-front.png' class='h-100 card-img mx-1' alt='default_car'>";
-                ?>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo "{$row['marka']} {$row['model']} ({$row['rejestracja']})" ?></h5>
-                    </div>
-                    <div class="col-md-6">
-                        <?php
-                        echo "<ul class='list-group list-group-flush'>
-                        <li class='mb-1'>{$row['segment']} ({$row['rok']})</li>
-                        <li class='mb-1'>Skrzynia {$row['skrzynia']}</li>
-                        <li class='mb-1'>Liczba miejsc: {$row['liczbamiejsc']}</li>
-                        <li class='mb-1'>Moc: {$row['mockw']} kW / ";
-                        echo (round($row['mockw'] * 1.36));
-                        echo " KM</li>
-                        </ul>";
-
-                        ?>
-                    </div>
-
-                    <div class="col-md-6">
-                        <?php
-                        echo "<ul class='list-group list-group-flush'> 
-                            <li class='mb-1'>{$row['paliwo']}</li>
-                            <li class='mb-1'> </li>
-                            <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena 24h: {$row['cenadoba']} zł</li>
-                            <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena KM:  {$row['cenakm']} zł</li>
+<?php 
+if(empty($result))
+    echo "<div class='alert alert-danger mx-5' role='alert'>Brak samochodów do wyświetlenia</div>";
+else
+{
+    foreach ($result as $row) { ?>
+        <div class="card mb-3 mx-5">
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <?php
+                    if ($row['zdjecie'] != null)
+                        echo "<img src='{$row['zdjecie']}' class='h-100 card-img' alt='{$row['tytul']}'>";
+                    else
+                        echo "<img src='images/sedan-car-front.png' class='h-100 card-img mx-1' alt='default_car'>";
+                    ?>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo "{$row['marka']} {$row['model']} ({$row['rejestracja']})" ?></h5>
+                        </div>
+                        <div class="col-md-6">
+                            <?php
+                            echo "<ul class='list-group list-group-flush'>
+                            <li class='mb-1'>{$row['segment']} ({$row['rok']})</li>
+                            <li class='mb-1'>Skrzynia {$row['skrzynia']}</li>
+                            <li class='mb-1'>Liczba miejsc: {$row['liczbamiejsc']}</li>
+                            <li class='mb-1'>Moc: {$row['mockw']} kW / ";
+                            echo (round($row['mockw'] * 1.36));
+                            echo " KM</li>
                             </ul>";
 
-                        if ($row['dostepny'] == true)
-                            echo "<small class='ok'>Dostępny</small>
-                            <a class='btn btn-success btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=add' title='Wypożycz' name='rentAdd'><i class='bi bi-calendar-plus'></i></a>";
-                        else
-                            echo "<p class='card-text mt-1'><small style='color: red;'>Nie dostępny</small></p>";
+                            ?>
+                        </div>
 
-                        echo "<a class='btn btn-info btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=details' title='Szczegóły' name='details'><i class='bi bi-info-circle'></i></a>";
-                        echo "<a class='btn btn-secondary btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=history' title='Historia' name='history'><i class='bi bi-journal-text'></i></a>";
-                        if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
-                            echo "<a class='btn btn-warning btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a>";
-                        ?>
+                        <div class="col-md-6">
+                            <?php
+                            echo "<ul class='list-group list-group-flush'> 
+                                <li class='mb-1'>{$row['paliwo']}</li>
+                                <li class='mb-1'> </li>
+                                <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena 24h: {$row['cenadoba']} zł</li>
+                                <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena KM:  {$row['cenakm']} zł</li>
+                                </ul>";
+
+                            if ($row['dostepny'] == true)
+                                echo "<small class='ok'>Dostępny</small>
+                                <a class='btn btn-success btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=add' title='Wypożycz' name='rentAdd'><i class='bi bi-calendar-plus'></i></a>";
+                            else
+                                echo "<p class='card-text mt-1'><small style='color: red;'>Nie dostępny</small></p>";
+
+                            echo "<a class='btn btn-info btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=details' title='Szczegóły' name='details'><i class='bi bi-info-circle'></i></a>";
+                            echo "<a class='btn btn-secondary btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=history' title='Historia' name='history'><i class='bi bi-journal-text'></i></a>";
+                            if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
+                                echo "<a class='btn btn-warning btn-sm mx-1 my-1' href='index.php?action=home&value={$row['idauto']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a>";
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-<?php
+    <?php
+    }
 }
 
 // wyświetlenie komponentu pagination
