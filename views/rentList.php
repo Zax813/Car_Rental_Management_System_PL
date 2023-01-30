@@ -66,10 +66,8 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         echo "<a class='btn btn-info btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
                         if($row['zaplacono']==false)
                         {
-                            if($row['datapoczatek'] >= date('Y-m-d'))
-                            {
-                                echo "<a class='btn btn-danger btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=cancel' title='Anuluj' name='cancel'><i class='bi bi-calendar-x'></i></a>"; 
-                            }
+
+                            echo "<a class='btn btn-danger btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=cancel' title='Anuluj' name='cancel'><i class='bi bi-calendar-x'></i></a>"; 
                             echo "<a class='btn btn-success btn-sm me-1' href='index.php?action=rentList&value={$row['idwypozyczenia']}&event=final' title='Zakończ' name='final'><i class='bi bi-calendar-check'></i></a></td>";
                         }
                         echo "</tr>";

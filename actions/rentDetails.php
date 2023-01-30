@@ -25,12 +25,6 @@ else
 
 if (array_key_exists('event', $_GET)) 
 {
-    if ($_GET['event'] == "edit") 
-    {
-        $_SESSION['rentEdit'] = $_SESSION['rentDetails'];
-        unset($_SESSION['rentDetails']);
-        redirect(url('rentEdit'));
-    }
 
     if ($_GET['event'] == "back") 
     {
@@ -38,25 +32,28 @@ if (array_key_exists('event', $_GET))
         redirect(url('rentList'));
     }
 
-    if ($_GET['event'] == "car") 
+    if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
     {
-        $_SESSION['carDetails']=$row['idauta'];
-        //unset($_SESSION['rentDetails']);
-        redirect(url('carDetails'));
-    }
+        if ($_GET['event'] == "car") 
+        {
+            $_SESSION['carDetails']=$row['idauta'];
+            //unset($_SESSION['rentDetails']);
+            redirect(url('carDetails'));
+        }
 
-    if ($_GET['event'] == "client") 
-    {
-        $_SESSION['clientDetails']=$row['idklienta'];
-        //unset($_SESSION['rentDetails']);
-        redirect(url('clientDetails'));
-    }
+        if ($_GET['event'] == "client") 
+        {
+            $_SESSION['clientDetails']=$row['idklienta'];
+            //unset($_SESSION['rentDetails']);
+            redirect(url('clientDetails'));
+        }
 
-    if ($_GET['event'] == "user") 
-    {
-        $_SESSION['userDetails']=$row['idpracownika'];
-        //unset($_SESSION['rentDetails']);
-        redirect(url('userDetails'));
+        if ($_GET['event'] == "user") 
+        {
+            $_SESSION['userDetails']=$row['idpracownika'];
+            //unset($_SESSION['rentDetails']);
+            redirect(url('userDetails'));
+        }
     }
 
 }

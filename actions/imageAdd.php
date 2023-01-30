@@ -1,8 +1,26 @@
 <?php
 $errors = array();
 
+if(array_key_exists('event', $_GET))
+{
+    if ($_GET['event'] == "back") 
+    {
+        if(isset($_SESSION['rootCarEdit']))
+        {
+            unset($_SESSION['rootCarEdit']);
+            redirect(url('carEdit'));
+        }
+        else
+        {
+            redirect(url('carAdd'));
+        }
+    }
+}
+
 if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik") 
 {
+    $errors = array();
+    $info = '';
     if (isset($_POST["submit"])) {
         // File upload path
         $folder = "images/";
@@ -23,7 +41,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                     $stmt = $db->query("INSERT into zdjecia (tytul, sciezka) VALUES ('" . $plik . "', '" . $sciezka . "')");
 
                     if ($stmt) {
-                        $errors['zdjecie'] = "Zdjęcie " . $plik . " zostało załadowane poprawnie.";
+                        $info = "Zdjęcie " . $plik . " zostało załadowane poprawnie.";
                     } else {
                         $errors['zdjecie'] = "Załadowanie zdjęcia do bazy nie powiodło się, spróbuj jeszcze raz.";
                     }

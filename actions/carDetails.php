@@ -2,6 +2,7 @@
 
 if(isset($_SESSION['user']))
 {
+    $tomorrow = date("Y-m-d", strtotime("+1 day"));
 
     $stmt = $db->prepare("SELECT IDAUTO, VIN, REJESTRACJA, Z.SCIEZKA AS ZDJECIE, Z.TYTUL AS TYTUL, S.NAZWASEGMENT AS SEGMENT, MR.NAZWAMARKI AS MARKA, MD.NAZWAMODEL AS MODEL, P.NAZWAPALIWO AS PALIWO, MOCKW, SKRZYNIA, LICZBAMIEJSC, ROK, AKTYWNY, SPRAWNY, DOSTEPNY, PRZEBIEG, CENADOBA, CENAKM, UWAGI
         FROM AUTA A
@@ -54,6 +55,10 @@ if(isset($_SESSION['user']))
         }
         if ($event['type'] == 'przeglad') {
             $title = ' ( Przegląd )';
+        }
+        if($event['datakoniec'] == null || $event['datakoniec'] == '0000-00-00' || $event['datakoniec'] == '')
+        {
+            $event['datakoniec'] = $tomorrow;
         }
 
         $calendarEvents[] = [

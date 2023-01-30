@@ -3,15 +3,17 @@ if(isset($_SESSION['user']))
 {
     if(isset($_SESSION['carHistory']))
     {
+        $tomorrow = date("Y-m-d", strtotime("+1 day"));
+
         //Zapytanie do bazy o wypozyczenia, serwisy i przeglad dla kalendarza
-        $calendarstmt = $db->prepare("SELECT 'wypozyczenie' AS TYPE, idwypozyczenia AS id, w.datapoczatek, w.datakoniec, k.nazwisko AS nazwisko, a.rejestracja AS rejestracja
+        $calendarstmt = $db->prepare("SELECT 'wypozyczenie' AS TYPE, idwypozyczenia AS id, w.datapoczatek, w.datakoniec AS datakoniec, k.nazwisko AS nazwisko, a.rejestracja AS rejestracja
         FROM wypozyczenia w
         INNER JOIN klienci k ON w.idklienta = k.idklienta
         INNER JOIN auta a ON w.idauta = a.idauto
         WHERE a.idauto = :idauto
         UNION ALL
 
-        SELECT 'serwis' AS TYPE, idserwis AS id, s.datapoczatek, s.datakoniec, NULL AS nazwisko, a.rejestracja AS rejestracja
+        SELECT 'serwis' AS TYPE, idserwis AS id, s.datapoczatek, s.datakoniec AS datakoniec, NULL AS nazwisko, a.rejestracja AS rejestracja
         FROM serwis s
         INNER JOIN auta a ON s.idauta = a.idauto
         WHERE a.idauto = :idauto
@@ -38,6 +40,11 @@ if(isset($_SESSION['user']))
             }
             if ($event['type'] == 'przeglad') {
                 $title = 'Przegląd (nr. '.$event['id'].')';
+            }
+
+            if($event['datakoniec'] == null || $event['datakoniec'] == '0000-00-00' || $event['datakoniec'] == '')
+            {
+                $event['datakoniec'] = $tomorrow;
             }
 
             $calendarEvents[] = [

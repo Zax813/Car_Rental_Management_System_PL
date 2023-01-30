@@ -57,8 +57,8 @@ if (isset($_SESSION['rentAdd'])) {
 
     // Pobierz aktualną datę w formacie YYYY-MM-DD
     $today = date("Y-m-d");
-    $preweek = date("Y-m-d", strtotime("-7 day"));
-    $maxdate = date("Y-m-d", strtotime("+30 day"));
+    $preweek = $today;
+    $maxdate = date("Y-m-d", strtotime("+7 day"));
 
     // Dodaj dzień do przodu
     $nextDay = date("Y-m-d", strtotime("+1 day"));
@@ -220,13 +220,15 @@ if (isset($_SESSION['rentAdd'])) {
 
         if (empty($fields['uwagi'])) {
             $_POST['uwagi'] = 'Brak';
+            $fields['uwagi'] = 'Brak';
         }
 
-        
 
-        if (count($errors) == 0) {
+        if (count($errors) == 0) 
+        {
 
-            try {
+            try 
+            {
 
                 $db->beginTransaction();
 
@@ -240,9 +242,9 @@ if (isset($_SESSION['rentAdd'])) {
                     $idkraj = $pstmt->fetchColumn();
 
                     //Jeśli nie to dodajemy kraj do bazy i pobieramy jego id
-                    if(!isset($idkraj))
+                    if(!isset($idkraj) || $idkraj == NULL || $idkraj == FALSE || $idkraj == '')
                     {
-                        $pstmt = $db->prepare("INSERT INTO KRAJ( NAZWAKRAJ) VALUES :kraj;");
+                        $pstmt = $db->prepare("INSERT INTO KRAJ( NAZWAKRAJ) VALUES (:kraj);");
                         $pstmt->bindValue(':kraj', $fields['kraj']);
                         $pstmt->execute();
 
@@ -254,11 +256,12 @@ if (isset($_SESSION['rentAdd'])) {
                     $pstmt->bindValue(':miasto', $fields['miasto']);
                     $pstmt->execute();
                     $idmiasto = $pstmt->fetchColumn();
+                    console_log($idmiasto);
 
                     //Jeśli nie to dodajemy miasto do bazy i pobieramy jego id
-                    if(!isset($idmiasto))
+                    if(!isset($idmiasto) || $idmiasto == NULL || $idmiasto == FALSE || $idmiasto == '')
                     {
-                        $pstmt = $db->prepare("INSERT INTO MIASTO( IDKRAJ, NAZWAMIASTO) VALUES :idkraj, :miasto;");
+                        $pstmt = $db->prepare("INSERT INTO MIASTO( IDKRAJ, NAZWAMIASTO) VALUES (:idkraj, :miasto);");
                         $pstmt->bindValue(':idkraj', $idkraj, PDO::PARAM_INT);
                         $pstmt->bindValue(':miasto', $fields['miasto']);
                         $pstmt->execute();
@@ -288,55 +291,78 @@ if (isset($_SESSION['rentAdd'])) {
                     $row['idklienta'] = $db->lastInsertId();
                 }
 
-                $uwagi = "Wydanie: ".$fields['uwagi'];
-
-                //Dodanie wypożyczenia do bazy
-                $stmt = $db->prepare("INSERT INTO public.wypozyczenia(
-                    idauta, idklienta, idpracownika, datapoczatek, datakoniec, przebiegstart, zaplacono, uwagi)
-                    VALUES (:idauta, :idklienta, :idpracownika, :datapoczatek, :datakoniec, :przebiegstart, FALSE, :uwagi);");
-                
-                $stmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
-                $stmt->bindValue(':idklienta', $row['idklienta'], PDO::PARAM_INT);
-                $stmt->bindValue(':idpracownika', $_SESSION['uid'], PDO::PARAM_INT);
-                $stmt->bindValue(':datapoczatek', $fields['datapoczatek']);
-                $stmt->bindValue(':datakoniec', $fields['datakoniec']);
-                $stmt->bindValue(':przebiegstart', $fields['przebiegstart'], PDO::PARAM_INT);
-                $stmt->bindValue(':uwagi', $uwagi);
-                
-                $stmt->execute();
-
-                //Jeśli podany przebieg w formularzu jest inny niż w bazie to aktualizuj
-                if($fields['przebiegstart'] != $row['przebiegauta'])
-                {
-                    $carstmt = $db->prepare("UPDATE auta
-                                            SET przebieg = :nowyprzebieg
-                                            WHERE idauto = :idauta;");
-                    
-                    $carstmt->bindValue(':nowyprzebieg', $fields['przebiegstart'], PDO::PARAM_INT);
-                    $carstmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
-                    $carstmt->execute();
-                }
-
-                //Jeśli data wypożyczenia jest dzisiejsza to aktualizuj dostępność
-                if($fields['datapoczatek'] == $today)
-                {
-                    $carstmt = $db->prepare("UPDATE auta
-                                            SET dostepny = FALSE
-                                            WHERE idauto = :idauta;");
-                    
-                    $carstmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
-                    $carstmt->execute();
-                }
-
                 $db->commit();
 
-            } catch (PDOException $e) {
+            } 
+            catch (PDOException $e) 
+            {
                 $db->rollBack();
                 $errors['all'] = "Błąd: " . $e->getMessage();
                 $info = "";
             }
 
-            if (count($errors) == 0) {
+
+            if(count($errors) == 0)
+            {
+                try
+                {
+                    $db->beginTransaction();
+
+                    $uwagi = "Wydanie: ".$fields['uwagi'];
+
+                    //Dodanie wypożyczenia do bazy
+                    $stmt = $db->prepare("INSERT INTO public.wypozyczenia(
+                        idauta, idklienta, idpracownika, datapoczatek, datakoniec, przebiegstart, zaplacono, uwagi)
+                        VALUES (:idauta, :idklienta, :idpracownika, :datapoczatek, :datakoniec, :przebiegstart, FALSE, :uwagi);");
+                    
+                    $stmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
+                    $stmt->bindValue(':idklienta', $row['idklienta'], PDO::PARAM_INT);
+                    $stmt->bindValue(':idpracownika', $_SESSION['uid'], PDO::PARAM_INT);
+                    $stmt->bindValue(':datapoczatek', $fields['datapoczatek']);
+                    $stmt->bindValue(':datakoniec', $fields['datakoniec']);
+                    $stmt->bindValue(':przebiegstart', $fields['przebiegstart'], PDO::PARAM_INT);
+                    $stmt->bindValue(':uwagi', $uwagi);
+                    
+                    $stmt->execute();
+
+                    //Jeśli podany przebieg w formularzu jest inny niż w bazie to aktualizuj
+                    if($fields['przebiegstart'] != $row['przebiegauta'])
+                    {
+                        $carstmt = $db->prepare("UPDATE auta
+                                                SET przebieg = :nowyprzebieg
+                                                WHERE idauto = :idauta;");
+                        
+                        $carstmt->bindValue(':nowyprzebieg', $fields['przebiegstart'], PDO::PARAM_INT);
+                        $carstmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
+                        $carstmt->execute();
+                    }
+
+                    //Jeśli data wypożyczenia jest dzisiejsza to aktualizuj dostępność
+                    if($fields['datapoczatek'] == $today)
+                    {
+                        $carstmt = $db->prepare("UPDATE auta
+                                                SET dostepny = FALSE
+                                                WHERE idauto = :idauta;");
+                        
+                        $carstmt->bindValue(':idauta', $row['idauto'], PDO::PARAM_INT);
+                        $carstmt->execute();
+                    }
+
+                    $db->commit();
+
+                }
+                catch (PDOException $e) 
+                {
+                    $db->rollBack();
+                    $errors['all'] = "Błąd: " . $e->getMessage();
+                    $info = "";
+                }
+            
+            }
+               
+
+            if (count($errors) == 0) 
+            {
 
                 $newid = $db->lastInsertId();
                 console_log("Dane dodane pomyślnie");

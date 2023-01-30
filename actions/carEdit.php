@@ -54,9 +54,9 @@ if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
 
         if(isset($_POST["addPhoto"]))
         {
+            $_SESSION['rootCarEdit'] = true;
             redirect(url('imageAdd'));
         }
-
 
         if(isset($_POST["acceptAdd"]))
         {

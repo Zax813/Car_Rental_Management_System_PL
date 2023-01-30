@@ -47,7 +47,7 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                             $roznica = (strtotime($row['datawaznosci']) - strtotime(date('Y-m-d'))) / (60 * 60 * 24);
 
                             if ($roznica >= 0 && $roznica <= 14) {
-                                echo "<td style='color: Yellow'>Skończy się za $roznica dni<td>";
+                                echo "<td style='background-color: orange'>Skończy się za $roznica dni<td>";
                             }else{
                                 echo "<td style='color: green'>Tak<td>";
                             }

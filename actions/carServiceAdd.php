@@ -3,7 +3,7 @@
 function getData($db) {
     
     // Pobierz dostępne numery rejestracyjne z bazy danych
-    $stmt = $db->prepare("SELECT rejestracja FROM auta WHERE SPRAWNY = TRUE;");
+    $stmt = $db->prepare("SELECT rejestracja FROM auta WHERE SPRAWNY = TRUE AND AKTYWNY=TRUE;");
     $stmt->execute();
 
     $rejestracje = $stmt->fetchAll();

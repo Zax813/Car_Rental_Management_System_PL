@@ -1,4 +1,4 @@
-<h2 class='form-outline mx-5 my-2'>Dodawanie samochodu</h2>
+<h2 class='form-outline mx-5 my-2'>Edytowanie samochodu</h2>
 
 <div class='form-outline mx-5 my-3'>
     <a class='btn btn-info btn-sm' href='index.php?action=carEdit&event=list' title='Lista' name='list'><i class='bi bi-arrow-left-circle'></i> Powrót</a>

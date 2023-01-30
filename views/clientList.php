@@ -16,13 +16,15 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
 
 </div>
 <div class='form-outline mx-5 my-2'>
-    <table id="userTable" class="table table-dark table-striped">
+    <table id="userTable" class="table table-striped">
         <thead>    
             <tr>
                 <th scope="col">ID</th>
+                <?php if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik"){ ?>
                 <th scope="col">Dokument</th>
                 <th scope="col">Nr Dokumentu</th>
                 <th scope="col">Pesel</th>
+                <?php } ?>
                 <th scope="col">Imię</th>
                 <th scope="col">Nazwisko</th>
                 <th scope="col">Telefon</th>
@@ -39,10 +41,15 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                     foreach ($result as $row) 
                     {
                         echo "<tr>
-                        <td>{$row['idklienta']}
-                        <td>{$row['rodzajdokumentu']}
-                        <td>{$row['nrdokumentu']}
-                        <td>{$row['pesel']}
+                        <td>{$row['idklienta']}";
+                        if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
+                        {
+                            echo "
+                            <td>{$row['rodzajdokumentu']}
+                            <td>{$row['nrdokumentu']}
+                            <td>{$row['pesel']}";
+                        }
+                        echo "
                         <td>{$row['imie']}
                         <td>{$row['nazwisko']}
                         <td>{$row['telefon']}
@@ -53,12 +60,16 @@ if ($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         
                         if($_SESSION['perm'] == "admin" || $_SESSION['perm'] == "kierownik")
                         {
-                            echo "<a class='btn btn-info btn-sm' href='index.php?action=clientList&value={$row['idklienta']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
-                            echo "<a class='btn btn-secondary btn-sm mx-1' href='index.php?action=clientList&value={$row['idklienta']}&event=history' title='Historia' name='history'><i class='bi bi-journal-text'></i></i></a>";
-                            echo "<a class='btn btn-warning btn-sm' href='index.php?action=clientList&value={$row['idklienta']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a></td>";
+                            echo "<a class='btn btn-info btn-sm me-1' href='index.php?action=clientList&value={$row['idklienta']}&event=details' title='Szczegóły' name='details'><i class='bi bi-person-vcard'></i></a>";
+                            echo "<a class='btn btn-secondary btn-sm me-1' href='index.php?action=clientList&value={$row['idklienta']}&event=history' title='Historia' name='history'><i class='bi bi-journal-text'></i></i></a>";
+                            echo "<a class='btn btn-warning btn-sm me-1' href='index.php?action=clientList&value={$row['idklienta']}&event=edit' title='Edytuj' name='edit'><i class='bi bi-pencil-square'></i></a></td>";
                             
                             //echo "</td>";
                         } 
+                        else
+                        {
+                            echo "<a class='btn btn-secondary btn-sm me-1' href='index.php?action=clientList&value={$row['idklienta']}&event=history' title='Historia' name='history'><i class='bi bi-journal-text'></i></i></a></td>";
+                        }
                         echo "</tr>";
                     }
                 }

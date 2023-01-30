@@ -153,7 +153,7 @@ else
                                 <li class='mb-1'>{$row['paliwo']}</li>
                                 <li class='mb-1'> </li>
                                 <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena 24h: {$row['cenadoba']} zł</li>
-                                <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena KM:  {$row['cenakm']} zł</li>
+                                <li class='mb-1' style='color: white; background-color: crimson;'>&nbsp Cena km:  {$row['cenakm']} zł</li>
                                 </ul>";
 
                             if ($row['dostepny'] == true)
